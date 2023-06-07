@@ -55,9 +55,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public Person getById(int id) {
-
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE person_id = ?";
-
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

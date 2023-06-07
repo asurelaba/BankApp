@@ -20,21 +20,6 @@ public class ConnectionPool {
     private static String username = DbConfiguration.getUsername();
     private static String password = DbConfiguration.getPassword();
 
-    //load DB properties
-    static {
-        try (FileReader fileReader = new FileReader(".\\src\\main\\resources\\db.properties")) {
-            Properties properties = new Properties();
-            properties.load(fileReader);
-            url = properties.getProperty("url");
-            username = properties.getProperty("user");
-            password = properties.getProperty("password");
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-
     private ConnectionPool() {
         maxConnections = 1;
     }

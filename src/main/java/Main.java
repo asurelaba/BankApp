@@ -1,4 +1,5 @@
 import com.solvd.db.dao.mysql.AccountDAO;
+import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.model.*;
 import com.solvd.db.service.CustomerService;
 import com.solvd.db.service.PersonService;
@@ -20,6 +21,8 @@ public class Main {
         account.setAccountType(a);
         new AccountDAO().insert(account);
         System.out.println(new AccountDAO().getAccountByTypeId(2));
+
+        System.out.println(new CustomersHasAccountsDAO().getById(1));
 
         //Using services, person service inturn uses address, city, country DAO
         PersonService personService = new PersonService();
@@ -48,5 +51,8 @@ public class Main {
         customer.setPerson(person1);
         CustomerService customerService = new CustomerService();
         customerService.createCustomer(customer);
+
+        //calling upsupported operations
+
     }
 }
