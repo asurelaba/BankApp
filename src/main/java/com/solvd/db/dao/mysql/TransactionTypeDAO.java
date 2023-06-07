@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionTypeDAO implements ITransactionTypeDAO {
-    private static final String TABLE_NAME = "transaction_types";
-
     private TransactionType resultSetToTransactionType(ResultSet resultSet) {
         TransactionType transactionType = new TransactionType();
         try {
@@ -26,7 +24,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public void insert(TransactionType transactionType) {
-        String query = "insert into " + TABLE_NAME + "(transaction_type)   values (?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(transaction_type) VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -41,7 +39,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public TransactionType getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where transaction_type_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE transaction_type_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -61,7 +59,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public void update(TransactionType transactionType) {
-        String query = "update " + TABLE_NAME + " set transaction_type = ? where transaction_type_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET transaction_type = ? WHERE transaction_type_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -78,7 +76,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public void delete(TransactionType transactionType) {
-        String query = "delete from " + TABLE_NAME + "where transaction_type_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE transaction_type_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -96,7 +94,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public List<TransactionType> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<TransactionType> transactionTypes = new ArrayList<>();
         try {
@@ -114,7 +112,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
 
     @Override
     public TransactionType getTransactionTypeByName(String name) {
-        String query = "select * from " + TABLE_NAME + " where transaction_type = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE transaction_type = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

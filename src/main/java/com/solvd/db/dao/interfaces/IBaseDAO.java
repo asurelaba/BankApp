@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IBaseDAO<T> {
-    ConnectionPool CONNECTION_POOL = new ConnectionPool();
+    ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     void insert(T t);
 

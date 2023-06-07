@@ -5,6 +5,7 @@ import com.solvd.db.service.PersonService;
 
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -34,16 +35,15 @@ public class Main {
         person1.setEmail("person10@abcd.com");
         person1.setPhoneNumber("1231231234");
         LocalDate d = LocalDate.parse("1999-09-09", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(d.getYear());
         person1.setDateOfBirth(Date.valueOf(d));
         Address address = new Address();
         address.setLine1("123 person10 lane");
         address.setLine2("apt 0");
         address.setZipCode("12345");
         City city = new City();
-        city.setCityName("pittsburgh");
+        city.setCityName("houston");
         Country country = new Country();
-        country.setCountryName("mexico");
+        country.setCountryName("usa");
         city.setCountry(country);
         address.setCity(city);
         person1.setAddress(address);

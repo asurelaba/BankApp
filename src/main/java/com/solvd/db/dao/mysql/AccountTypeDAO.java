@@ -2,6 +2,7 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.IAccountTypeDAO;
 import com.solvd.db.model.AccountType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTypeDAO implements IAccountTypeDAO {
-    private String tableName = "account_types";
-
     private AccountType resultSetToAccountType(ResultSet resultSet) {
         AccountType accountType = new AccountType();
         try {
@@ -25,7 +24,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public AccountType getByName(String accountType) {
-        String query = "select * from " + tableName + " where account_type = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_type = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -45,7 +44,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public void insert(AccountType accountType) {
-        String query = "insert into " + tableName + "(account_type) values (?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(account_type) VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -60,7 +59,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public AccountType getById(int id) {
-        String query = "select * from " + tableName + " where account_type_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_type_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -80,7 +79,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public void update(AccountType accountType) {
-        String query = "update " + tableName + " set account_type = ? where account_type_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET account_type = ? WHERE account_type_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -98,7 +97,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public void delete(AccountType accountType) {
-        String query = "delete from " + tableName + "where account_type_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE account_type_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -116,7 +115,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
 
     @Override
     public List<AccountType> getAll() {
-        String query = "select * from " + tableName;
+        String query = "SELECT * FROM " + TABLE_NAME;
         List<AccountType> accountTypes = new ArrayList<>();
         Connection connection = CONNECTION_POOL.getConnection();
         try {

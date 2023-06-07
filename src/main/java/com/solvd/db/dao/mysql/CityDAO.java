@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CityDAO implements ICityDAO {
-    private static final String TABLE_NAME = "cities";
-
     private City resultSetToCity(ResultSet resultSet) {
         City city = null;
         try {
@@ -31,7 +29,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public void insert(City city) {
-        String query = "insert into " + TABLE_NAME + "(city_name, country_id)  values (?,?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(city_name, country_id)  VALUES (?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -47,7 +45,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public City getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where city_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE city_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -67,7 +65,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public void update(City city) {
-        String query = "update " + TABLE_NAME + " set city_name = ?, country_id = ? where city_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET city_name = ?, country_id = ? WHERE city_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -86,7 +84,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public void delete(City city) {
-        String query = "delete from " + TABLE_NAME + "where address_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE address_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -104,7 +102,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public List<City> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<City> cities = new ArrayList<>();
         try {
@@ -122,7 +120,7 @@ public class CityDAO implements ICityDAO {
 
     @Override
     public List<City> getCityByName(String cityName) {
-        String query = "select * from " + TABLE_NAME + " where city_name = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE city_name = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         List<City> cities = new ArrayList<>();
         try {

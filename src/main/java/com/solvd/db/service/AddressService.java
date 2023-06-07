@@ -40,8 +40,9 @@ public class AddressService {
 
     public void createAddress(Address address){
         try{
-            new CityService().createCity(address.getCity());
-            City city = new CityService().getCityByIdWithCountry(7);
+            CityService cityService = new CityService();
+            cityService.createCity(address.getCity());
+            City city = new CityService().getCityByIdWithCountry(2);
             IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
             addressDAO.insert(address);
         } catch (DAONotFoundException e) {

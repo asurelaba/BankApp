@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO implements IEmployeeDAO {
-    private static final String TABLE_NAME = "employees";
-
     private Employee resultSetToEmployee(ResultSet resultSet) {
         Employee employee = new Employee();
         try {
@@ -34,7 +32,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public void insert(Employee employee) {
-        String query = "insert into " + TABLE_NAME + "(person_id, employee_role_id, manager_id)   values (?,?,?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(person_id, employee_role_id, manager_id)   VALUES (?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -51,7 +49,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public Employee getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where employee_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE employee_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -71,7 +69,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public void update(Employee employee) {
-        String query = "update " + TABLE_NAME + " set person_id = ? , employee_role_id = ?, manager_id = ? where employee_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET person_id = ? , employee_role_id = ?, manager_id = ? WHERE employee_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -90,7 +88,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public void delete(Employee employee) {
-        String query = "delete from " + TABLE_NAME + "where employee_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE employee_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -108,7 +106,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public List<Employee> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<Employee> employees = new ArrayList<>();
         try {
@@ -126,7 +124,7 @@ public class EmployeeDAO implements IEmployeeDAO {
 
     @Override
     public List<Employee> getEmployeesByRoleID(int roleId) {
-        String query = "select * from " + TABLE_NAME + " where employee_role_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE employee_role_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         List<Employee> employees = new ArrayList<>();
         try {

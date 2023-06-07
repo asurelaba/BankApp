@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressDAO implements IAddressDAO {
-    private static final String TABLE_NAME = "addresses";
-
     private Address resultSetToAddress(ResultSet resultSet) {
         Address address = new Address();
         try {
@@ -33,7 +31,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public List<Address> getAddressByZipCode(String zipCode) {
-        String query = "select * from " + TABLE_NAME + " where zip_code = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE zip_code = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         List<Address> addresses = new ArrayList<>();
         try {
@@ -54,7 +52,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public void insert(Address address) {
-        String query = "insert into " + TABLE_NAME + "(line1, line2, zip_code, city_id) values (?,?,?,?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(line1, line2, zip_code, city_id) VALUES (?,?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -72,7 +70,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public Address getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where address_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE address_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -92,7 +90,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public void update(Address address) {
-        String query = "update " + TABLE_NAME + " set line1 = ?, line2 = ?, zip_code =?, city_id = ? where address_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET line1 = ?, line2 = ?, zip_code =?, city_id = ? WHERE address_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -113,7 +111,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public void delete(Address address) {
-        String query = "delete from " + TABLE_NAME + "where address_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE address_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -131,7 +129,7 @@ public class AddressDAO implements IAddressDAO {
 
     @Override
     public List<Address> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<Address> addresses = new ArrayList<>();
         try {

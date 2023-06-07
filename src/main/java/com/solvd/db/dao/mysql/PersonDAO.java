@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDAO implements IPersonDAO {
-    private static final String TABLE_NAME = "persons";
-
     private Person resultSetToPerson(ResultSet resultSet) {
         Person person = new Person();
         try {
@@ -36,7 +34,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public void insert(Person person) {
-        String query = "insert into " + TABLE_NAME + "(first_name, last_name, date_of_birth, phone_number, email, address_id)   values (?,?,?,?,?,?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(first_name, last_name, date_of_birth, phone_number, email, address_id) VALUES (?,?,?,?,?,?)";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -59,7 +57,7 @@ public class PersonDAO implements IPersonDAO {
     @Override
     public Person getById(int id) {
 
-        String query = "select * from " + TABLE_NAME + " where person_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE person_id = ?";
 
         Connection connection = CONNECTION_POOL.getConnection();
         try {
@@ -83,7 +81,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public void update(Person person) {
-        String query = "update " + TABLE_NAME + " set first_name = ? , last_name = ?, date_of_birth = ?, phone_number =?, email =?, address_id =? where person_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET first_name = ? , last_name = ?, date_of_birth = ?, phone_number =?, email =?, address_id =? WHERE person_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -105,7 +103,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public void delete(Person person) {
-        String query = "delete from " + TABLE_NAME + "where person_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE person_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -123,7 +121,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public List<Person> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SElECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<Person> personList = new ArrayList<>();
         try {
@@ -141,7 +139,7 @@ public class PersonDAO implements IPersonDAO {
 
     @Override
     public List<Person> getPersonByLastName(String lastName) {
-        String query = "select * from " + TABLE_NAME + " where last_name = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE last_name = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         List<Person> personList = new ArrayList<>();
         try {

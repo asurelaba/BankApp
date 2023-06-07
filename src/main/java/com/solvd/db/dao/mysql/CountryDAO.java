@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDAO implements ICountryDAO {
-    private static final String TABLE_NAME = "countries";
-
     private Country resultSetToCountry(ResultSet resultSet) {
         Country country = new Country();
         try {
@@ -26,7 +24,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public void insert(Country country) {
-        String query = "insert into " + TABLE_NAME + "(country_name)   values (?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(country_name)   VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -41,7 +39,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public Country getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where country_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE country_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -61,7 +59,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public void update(Country country) {
-        String query = "update " + TABLE_NAME + " set country_name = ? where city_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET country_name = ? WHERE city_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -78,7 +76,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public void delete(Country country) {
-        String query = "delete from " + TABLE_NAME + "where country_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE country_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -96,7 +94,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public List<Country> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<Country> countries = new ArrayList<>();
         try {
@@ -114,7 +112,7 @@ public class CountryDAO implements ICountryDAO {
 
     @Override
     public Country getCountryByName(String countryName) {
-        String query = "select * from " + TABLE_NAME + " where country_name = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE country_name = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

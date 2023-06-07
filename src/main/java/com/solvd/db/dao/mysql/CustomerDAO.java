@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements ICustomerDAO {
-    private static final String TABLE_NAME = "customers";
-
     private Customer resultSetToCustomer(ResultSet resultSet) {
         Customer customer = new Customer();
         try {
@@ -29,7 +27,7 @@ public class CustomerDAO implements ICustomerDAO {
 
     @Override
     public void insert(Customer customer) {
-        String query = "insert into " + TABLE_NAME + "(person_id)   values (?)";
+        String query = "INSERT INTO " + TABLE_NAME + "(person_id)   VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -44,7 +42,7 @@ public class CustomerDAO implements ICustomerDAO {
 
     @Override
     public Customer getById(int id) {
-        String query = "select * from " + TABLE_NAME + " where customer_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE customer_id = ?";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -64,7 +62,7 @@ public class CustomerDAO implements ICustomerDAO {
 
     @Override
     public void update(Customer customer) {
-        String query = "update " + TABLE_NAME + " set person_id = ? where customer_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET person_id = ? WHERE customer_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -81,7 +79,7 @@ public class CustomerDAO implements ICustomerDAO {
 
     @Override
     public void delete(Customer customer) {
-        String query = "delete from " + TABLE_NAME + "where customer_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + "WHERE customer_id = ?";
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
@@ -99,7 +97,7 @@ public class CustomerDAO implements ICustomerDAO {
 
     @Override
     public List<Customer> getAll() {
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Connection connection = CONNECTION_POOL.getConnection();
         List<Customer> customers = new ArrayList<>();
         try {

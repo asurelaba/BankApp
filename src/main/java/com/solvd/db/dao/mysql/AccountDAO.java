@@ -12,10 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO implements IAccountDAO {
-
     @Override
     public List<Account> getAccountByTypeId(int accountTypeId) {
-        String query = "select * from accounts where account_type_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_type_id = ?";
         List<Account> accounts = new ArrayList<>();
         try {
             Connection connection = CONNECTION_POOL.getConnection();
@@ -43,7 +42,7 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public void insert(Account account) {
-        String query = "INSERT INTO ACCOUNTS (balance,minbalance,account_type_id)  VALUES (?,?,?)";
+        String query = "INSERT INTO " + TABLE_NAME + " (balance,minbalance,account_type_id)  VALUES (?,?,?)";
         try {
             Connection connection = CONNECTION_POOL.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -60,8 +59,9 @@ public class AccountDAO implements IAccountDAO {
     @Override
     public Account getById(int id) {
         Connection connection = CONNECTION_POOL.getConnection();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_number = ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM ACCOUNTS WHERE account_number = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -83,7 +83,7 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public void update(Account account) {
-        String query = "UPDATE accounts " +
+        String query = "UPDATE " + TABLE_NAME +
                 "SET accounts.balance = ? " +
                 "WHERE account_number = ?";
         Connection connection = null;
@@ -104,7 +104,7 @@ public class AccountDAO implements IAccountDAO {
 
     @Override
     public void delete(Account account) {
-        String query = "DELETE FROM accounts " +
+        String query = "DELETE FROM " + TABLE_NAME +
                 "WHERE account_number = ?";
         Connection connection = null;
         try {
@@ -124,9 +124,10 @@ public class AccountDAO implements IAccountDAO {
     @Override
     public List<Account> getAll() {
         Connection connection = CONNECTION_POOL.getConnection();
+        String query = "select * from " + TABLE_NAME;
         List<Account> accounts = new ArrayList<>();
         try {
-            ResultSet resultSet = connection.prepareStatement("select * from accounts").executeQuery();
+            ResultSet resultSet = connection.prepareStatement(query).executeQuery();
             while (resultSet.next()) {
                 Account account = new Account();
                 account.setAccountNumber(resultSet.getInt("account_number"));

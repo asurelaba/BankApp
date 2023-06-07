@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTransactionDAO implements IAccountTransactionDAO {
-
     private AccountTransaction resultSetToAccountTransaction(ResultSet resultSet) {
         AccountTransaction accountTransaction = new AccountTransaction();
         Account account = new Account();
@@ -35,9 +34,10 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     @Override
     public List<AccountTransaction> getTransactionByAccountNumber(int accountNumber) {
         Connection connection = CONNECTION_POOL.getConnection();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_number = ?";
         List<AccountTransaction> accountTransactions = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account_transactions WHERE account_number = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, accountNumber);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -55,7 +55,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
 
     @Override
     public void insert(AccountTransaction accountTransaction) {
-        String query = "INSERT INTO account_transactions (amount, transaction_date, account_number, transaction_type_id)\n" +
+        String query = "INSERT INTO " + TABLE_NAME + " (amount, transaction_date, account_number, transaction_type_id)" +
                 "VALUES (?,?,?,?,?)";
         try {
             Connection connection = CONNECTION_POOL.getConnection();
@@ -75,8 +75,9 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     @Override
     public AccountTransaction getById(int id) {
         Connection connection = CONNECTION_POOL.getConnection();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE transaction_id = ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account_transactions WHERE transaction_id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -94,8 +95,8 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     @Override
     public void update(AccountTransaction accountTransaction) {
         Connection connection = CONNECTION_POOL.getConnection();
-        String query = "Update account_transactions set  transaction_date = ? ," +
-                "amount = ?, account_number = ? , transaction_type_id = ? where transaction_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET  transaction_date = ? ," +
+                "amount = ?, account_number = ? , transaction_type_id = ? WHERE transaction_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDate(1, accountTransaction.getTransactionDate());
@@ -114,7 +115,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     @Override
     public void delete(AccountTransaction accountTransaction) {
         Connection connection = CONNECTION_POOL.getConnection();
-        String query = "delete from account_transactions where transaction_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE transaction_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, accountTransaction.getTransactionId());
@@ -130,8 +131,9 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     public List<AccountTransaction> getAll() {
         Connection connection = CONNECTION_POOL.getConnection();
         List<AccountTransaction> accountTransactions = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_NAME;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM account_transactions");
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     AccountTransaction accountTransaction = resultSetToAccountTransaction(resultSet);
