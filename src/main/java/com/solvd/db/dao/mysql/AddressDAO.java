@@ -101,7 +101,6 @@ public class AddressDAO implements IAddressDAO {
             preparedStatement.setInt(4, address.getCity().getCityId());
             preparedStatement.setInt(5, address.getAddressId());
             preparedStatement.execute();
-
         } catch (SQLException e) {
             System.out.println("Update failed" + e);
         } finally {
