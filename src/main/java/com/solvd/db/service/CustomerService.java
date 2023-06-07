@@ -31,7 +31,6 @@ public class CustomerService {
             PersonService personService = new PersonService();
             personService.createPerson(customer.getPerson());
             ICustomerDAO customerDAO = (ICustomerDAO) jdbcDAOFactory.getDAO(Customer.class.getSimpleName());
-            //customer.setPerson();
             customerDAO.insert(customer);
         } catch (DAONotFoundException e) {
             System.out.println(e);

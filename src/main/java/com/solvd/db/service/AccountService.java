@@ -24,7 +24,7 @@ public class AccountService {
             IAccountDAO accountDAO = (IAccountDAO) jdbcDAOFactory.getDAO(Account.class.getSimpleName());
             accountDAO.insert(account);
         } catch (DAONotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -33,7 +33,7 @@ public class AccountService {
             IAccountDAO accountDAO = (IAccountDAO) jdbcDAOFactory.getDAO(Account.class.getSimpleName());
             accountDAO.delete(account);
         } catch (DAONotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 }
