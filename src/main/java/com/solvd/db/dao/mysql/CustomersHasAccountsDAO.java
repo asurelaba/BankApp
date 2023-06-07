@@ -30,12 +30,6 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
         }
     }
 
-    //will not be implemented as getbycustomerId and getbyAccount_number returns multiple rows
-    @Override
-    public CustomerHasAccount getById(int id) {
-        return null;
-    }
-
     @Override
     public void update(CustomerHasAccount customerHasAccount) {
         String query = "UPDATE " + TABLE_NAME + "SET customer_id =? WHERE account_number = ?";

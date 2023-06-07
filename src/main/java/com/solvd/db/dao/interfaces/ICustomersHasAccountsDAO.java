@@ -12,4 +12,11 @@ public interface ICustomersHasAccountsDAO extends IBaseDAO<CustomerHasAccount> {
     List<Account> getAccountsByCustomerID(int customerId);
 
     List<Customer> getCustomersByAccountNumber(int accountNumber);
+
+    //will not be implemented as getbycustomerId and getbyAccount_number returns multiple rows
+    @Override
+    default  CustomerHasAccount getById(int id) {
+        System.out.println("getById is not supported by CustomersHasAccountsDAO");
+        return null;
+    }
 }
