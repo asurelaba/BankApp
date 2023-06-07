@@ -13,13 +13,14 @@ public class AccountTransactionService {
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<AccountTransaction> getAccountTransactionsByAccountNumber(int accountNumber) {
+        List<AccountTransaction> accountTransactions = new ArrayList<>();
         try {
             IAccountTransactionDAO accountTransactionDAO = (AccountTransactionDAO) jdbcDAOFactory.getDAO(AccountTransaction.class.getSimpleName());
-            return accountTransactionDAO.getTransactionByAccountNumber(accountNumber);
+            accountTransactions = accountTransactionDAO.getTransactionByAccountNumber(accountNumber);
         } catch (DAONotFoundException e) {
             System.out.println(e);
         }
-        return new ArrayList<>();
+        return accountTransactions;
     }
 
 }

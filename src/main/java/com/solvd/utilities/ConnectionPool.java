@@ -23,17 +23,16 @@ public class ConnectionPool {
 
     //load DB properties
     static {
-        try {
-            FileReader fileReader = new FileReader(".\\src\\main\\resources\\db.properties");
+        try (FileReader fileReader = new FileReader(".\\src\\main\\resources\\db.properties")) {
             Properties properties = new Properties();
             properties.load(fileReader);
             url = properties.getProperty("url");
             username = properties.getProperty("user");
             password = properties.getProperty("password");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
     }
 
@@ -49,7 +48,6 @@ public class ConnectionPool {
     }
 
     public synchronized Connection getConnection() {
-        //System.out.println(Thread.currentThread().getName() + " is trying to obtain connection");
         if (pool == null) {
             pool = new ArrayBlockingQueue<>(maxConnections);
         }

@@ -124,7 +124,7 @@ public class AccountDAO implements IAccountDAO {
     @Override
     public List<Account> getAll() {
         Connection connection = CONNECTION_POOL.getConnection();
-        String query = "select * from " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         List<Account> accounts = new ArrayList<>();
         try {
             ResultSet resultSet = connection.prepareStatement(query).executeQuery();

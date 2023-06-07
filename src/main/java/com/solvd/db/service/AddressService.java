@@ -44,6 +44,7 @@ public class AddressService {
             cityService.createCity(address.getCity());
             City city = new CityService().getCityByIdWithCountry(2);
             IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
+            address.setCity(city);
             addressDAO.insert(address);
         } catch (DAONotFoundException e) {
             System.out.println(e);

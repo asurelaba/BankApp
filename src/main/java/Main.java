@@ -4,13 +4,11 @@ import com.solvd.db.service.CustomerService;
 import com.solvd.db.service.PersonService;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException, SQLException, ParseException {
+    public static void main(String[] args) {
 
         //Initial usage of DAO in main
         System.out.println(new AccountDAO().getById(20230004));

@@ -9,13 +9,14 @@ public class AccountService {
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public Account getAccountByAccountNumber(int accountNumber) {
+        Account account = new Account();
         try {
             IAccountDAO accountDAO = (IAccountDAO) jdbcDAOFactory.getDAO(Account.class.getSimpleName());
-            return accountDAO.getById(accountNumber);
+            account = accountDAO.getById(accountNumber);
         } catch (DAONotFoundException e) {
             System.out.println(e);
         }
-        return null;
+        return account;
     }
 
     public void createAccount(Account account){

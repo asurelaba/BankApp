@@ -32,7 +32,7 @@ public class JdbcDAOFactory extends AbstractDAOFactory {
             case "transactiontype":
                 return new TransactionTypeDAO();
             default:
-                throw new DAONotFoundException();
+                throw new DAONotFoundException( tableName + "DAO not found");
         }
     }
 }
