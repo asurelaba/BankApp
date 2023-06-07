@@ -1,10 +1,8 @@
 package com.solvd.db.dao.mysql;
 
-import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.dao.interfaces.IAccountTransactionDAO;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountTransaction;
-import com.solvd.db.model.AccountType;
 import com.solvd.db.model.TransactionType;
 
 import java.sql.Connection;

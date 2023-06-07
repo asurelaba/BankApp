@@ -1,10 +1,8 @@
 package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
-import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.dao.interfaces.ICustomerDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
-import com.solvd.db.model.Account;
 import com.solvd.db.model.Customer;
 
 import java.util.ArrayList;

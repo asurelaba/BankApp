@@ -3,7 +3,6 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountType;
-import com.solvd.utilities.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

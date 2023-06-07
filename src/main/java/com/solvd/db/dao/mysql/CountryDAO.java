@@ -1,7 +1,6 @@
 package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ICountryDAO;
-import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
 
 import java.sql.Connection;

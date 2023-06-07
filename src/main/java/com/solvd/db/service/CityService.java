@@ -1,16 +1,12 @@
 package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
-import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.dao.interfaces.ICityDAO;
 import com.solvd.db.dao.interfaces.ICountryDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
-import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CityService {

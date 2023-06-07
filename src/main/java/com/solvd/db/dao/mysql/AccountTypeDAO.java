@@ -1,9 +1,7 @@
 package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.IAccountTypeDAO;
-import com.solvd.db.model.AccountTransaction;
 import com.solvd.db.model.AccountType;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

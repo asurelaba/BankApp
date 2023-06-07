@@ -1,8 +1,6 @@
 package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ITransactionTypeDAO;
-import com.solvd.db.model.Address;
-import com.solvd.db.model.Person;
 import com.solvd.db.model.TransactionType;
 
 import java.sql.Connection;

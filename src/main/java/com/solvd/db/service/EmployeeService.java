@@ -2,12 +2,9 @@ package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.IEmployeeDAO;
-import com.solvd.db.dao.interfaces.IEmployeeRoleDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Employee;
-import com.solvd.db.model.EmployeeRole;
 
-import java.rmi.server.RMIClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 

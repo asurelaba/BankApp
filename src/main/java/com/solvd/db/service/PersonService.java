@@ -1,17 +1,11 @@
 package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
-import com.solvd.db.dao.interfaces.IAddressDAO;
-import com.solvd.db.dao.interfaces.IEmployeeDAO;
 import com.solvd.db.dao.interfaces.IPersonDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
-import com.solvd.db.model.Employee;
 import com.solvd.db.model.Person;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PersonService {
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();

@@ -1,7 +1,6 @@
 package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ICustomerDAO;
-import com.solvd.db.model.Country;
 import com.solvd.db.model.Customer;
 import com.solvd.db.model.Person;
 

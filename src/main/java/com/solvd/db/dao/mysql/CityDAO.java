@@ -1,7 +1,6 @@
 package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ICityDAO;
-import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
 
