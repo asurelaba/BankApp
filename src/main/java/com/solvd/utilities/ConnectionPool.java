@@ -18,6 +18,8 @@ public class ConnectionPool {
     private static String url;
     private static String username;
     private static String password;
+    private static ConnectionPool connectionPool;
+
 
     //load DB properties
     static {
@@ -33,11 +35,17 @@ public class ConnectionPool {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    public ConnectionPool() {
+    private ConnectionPool() {
         maxConnections = 1;
+    }
+
+    public static ConnectionPool getInstance(){
+        if(connectionPool == null){
+            connectionPool = new ConnectionPool();
+        }
+        return connectionPool;
     }
 
     public synchronized Connection getConnection() {
@@ -57,7 +65,6 @@ public class ConnectionPool {
         } else if (inUseConnections == null || inUseConnections.size() < maxConnections) {
             try {
                 Connection connection = DriverManager.getConnection(url, username, password);
-                System.out.println("in getConnection " + url + username + password);
                 if (inUseConnections == null) {
                     inUseConnections = new ArrayBlockingQueue<>(maxConnections);
                 }
