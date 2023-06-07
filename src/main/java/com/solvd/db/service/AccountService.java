@@ -19,7 +19,7 @@ public class AccountService {
         return account;
     }
 
-    public void createAccount(Account account){
+    public void createAccount(Account account) {
         try {
             IAccountDAO accountDAO = (IAccountDAO) jdbcDAOFactory.getDAO(Account.class.getSimpleName());
             accountDAO.insert(account);
@@ -28,7 +28,7 @@ public class AccountService {
         }
     }
 
-    public void deleteAccount(Account account){
+    public void deleteAccount(Account account) {
         try {
             IAccountDAO accountDAO = (IAccountDAO) jdbcDAOFactory.getDAO(Account.class.getSimpleName());
             accountDAO.delete(account);

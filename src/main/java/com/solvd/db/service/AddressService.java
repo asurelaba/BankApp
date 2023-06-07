@@ -12,13 +12,13 @@ import java.util.List;
 public class AddressService {
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
-    public List<Address> getAllAddressesByCity(City city){
+    public List<Address> getAllAddressesByCity(City city) {
         List<Address> result = new ArrayList<>();
         try {
             IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
             List<Address> addresses = addressDAO.getAll();
-            for (Address address: addresses) {
-                if(address.getCity().getCityId() == city.getCityId()){
+            for (Address address : addresses) {
+                if (address.getCity().getCityId() == city.getCityId()) {
                     result.add(address);
                 }
             }
@@ -28,8 +28,8 @@ public class AddressService {
         return result;
     }
 
-    public Address getAddressById (int addressId){
-        try{
+    public Address getAddressById(int addressId) {
+        try {
             IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
             return addressDAO.getById(addressId);
         } catch (DAONotFoundException e) {
@@ -38,8 +38,8 @@ public class AddressService {
         return null;
     }
 
-    public void createAddress(Address address){
-        try{
+    public void createAddress(Address address) {
+        try {
             CityService cityService = new CityService();
             cityService.createCity(address.getCity());
             City city = new CityService().getCityByIdWithCountry(2);

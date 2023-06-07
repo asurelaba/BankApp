@@ -17,7 +17,7 @@ public class CountryDAO implements ICountryDAO {
             country.setCountryId(resultSet.getInt("country_id"));
             country.setCountryName(resultSet.getString("country_name"));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return country;
     }

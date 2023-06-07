@@ -17,7 +17,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
             transactionType.setTransactionTypeId(resultSet.getInt(1));
             transactionType.setTransactionType(resultSet.getString(2));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return transactionType;
     }

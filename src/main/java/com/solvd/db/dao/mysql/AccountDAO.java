@@ -74,7 +74,7 @@ public class AccountDAO implements IAccountDAO {
                 return account;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -94,7 +94,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setInt(2, account.getAccountNumber());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -113,7 +113,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setInt(1, account.getAccountNumber());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);

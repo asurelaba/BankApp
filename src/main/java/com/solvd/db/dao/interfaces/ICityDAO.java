@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ICityDAO extends IBaseDAO<City> {
     String TABLE_NAME = "cities";
+
     public List<City> getCityByName(String cityName);
 }

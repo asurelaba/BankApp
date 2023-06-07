@@ -30,8 +30,8 @@ public class PersonService {
         return person;
     }
 
-    public void createPerson(Person person){
-        try{
+    public void createPerson(Person person) {
+        try {
             new AddressService().createAddress(person.getAddress());
             IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
             personDAO.insert(person);

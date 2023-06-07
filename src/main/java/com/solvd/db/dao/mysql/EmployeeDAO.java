@@ -25,7 +25,7 @@ public class EmployeeDAO implements IEmployeeDAO {
             manager.setEmployeeId(resultSet.getInt("manager_id"));
             employee.setManager(manager);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return employee;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public class CityService {
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
-    public List<City> getAllCities(){
+    public List<City> getAllCities() {
         try {
             ICityDAO cityDAO = (ICityDAO) jdbcDAOFactory.getDAO(City.class.getSimpleName());
             return cityDAO.getAll();
@@ -22,10 +22,10 @@ public class CityService {
         return null;
     }
 
-    public City getCityByIdWithCountry(int id){
+    public City getCityByIdWithCountry(int id) {
         try {
             ICityDAO cityDAO = (ICityDAO) jdbcDAOFactory.getDAO(City.class.getSimpleName());
-            City city =  cityDAO.getById(id);
+            City city = cityDAO.getById(id);
             ICountryDAO countryDAO = (ICountryDAO) jdbcDAOFactory.getDAO(Country.class.getSimpleName());
             city.setCountry(countryDAO.getById(city.getCountry().getCountryId()));
             return city;
@@ -35,12 +35,12 @@ public class CityService {
         return null;
     }
 
-    public void createCity(City city){
+    public void createCity(City city) {
         try {
             ICityDAO cityDAO = (ICityDAO) jdbcDAOFactory.getDAO(City.class.getSimpleName());
             CountryService countryService = new CountryService();
             Country country = countryService.getCountryByName(city.getCountry().getCountryName());
-            if(country == null){
+            if (country == null) {
                 countryService.createCountry(city.getCountry());
                 country = countryService.getCountryByName(city.getCountry().getCountryName());
             }

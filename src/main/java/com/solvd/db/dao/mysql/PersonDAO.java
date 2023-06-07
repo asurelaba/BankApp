@@ -27,7 +27,7 @@ public class PersonDAO implements IPersonDAO {
             person.setAddress(address);
             System.out.println(person);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return person;
     }

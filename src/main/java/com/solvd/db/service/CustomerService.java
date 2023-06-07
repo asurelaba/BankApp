@@ -2,10 +2,10 @@ package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.ICustomerDAO;
+import com.solvd.db.dao.interfaces.ICustomersHasAccounts;
+import com.solvd.db.dao.interfaces.ICustomersHasAccountsDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
-import com.solvd.db.model.Address;
-import com.solvd.db.model.Customer;
-import com.solvd.db.model.Person;
+import com.solvd.db.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class CustomerService {
         return customers;
     }
 
-    public void createCustomer(Customer customer){
+    public void createCustomer(Customer customer) {
         try {
             PersonService personService = new PersonService();
             personService.createPerson(customer.getPerson());
@@ -35,5 +35,19 @@ public class CustomerService {
         } catch (DAONotFoundException e) {
             System.out.println(e);
         }
+    }
+
+    public Customer getCustomerWithAccounts(int customerId) {
+        Customer customer = new Customer();
+        try {
+            ICustomerDAO customerDAO = (ICustomerDAO) jdbcDAOFactory.getDAO(Customer.class.getSimpleName());
+            customer = customerDAO.getById(customerId);
+            ICustomersHasAccountsDAO customersHasAccountsDAO = (ICustomersHasAccountsDAO) jdbcDAOFactory.getDAO(CustomerHasAccount.class.getSimpleName());
+            List<Account> accounts = customersHasAccountsDAO.getAccountsByCustomerID(customerId);
+            customer.setAccounts(accounts);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
+        return customer;
     }
 }

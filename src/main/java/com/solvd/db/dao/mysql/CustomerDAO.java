@@ -20,7 +20,7 @@ public class CustomerDAO implements ICustomerDAO {
             person.setPersonId(resultSet.getInt("person_id"));
             customer.setPerson(person);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return customer;
     }

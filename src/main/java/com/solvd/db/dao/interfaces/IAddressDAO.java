@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IAddressDAO extends IBaseDAO<Address> {
     String TABLE_NAME = "addresses";
+
     public List<Address> getAddressByZipCode(String zipCode);
 }

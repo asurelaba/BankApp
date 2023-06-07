@@ -40,8 +40,8 @@ public class ConnectionPool {
         maxConnections = 1;
     }
 
-    public static ConnectionPool getInstance(){
-        if(connectionPool == null){
+    public static ConnectionPool getInstance() {
+        if (connectionPool == null) {
             connectionPool = new ConnectionPool();
         }
         return connectionPool;

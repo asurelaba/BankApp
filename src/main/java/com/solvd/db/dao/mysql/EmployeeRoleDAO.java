@@ -19,7 +19,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
             employeeRole.setJobDescription(resultSet.getString("job_description"));
             employeeRole.setSalary(resultSet.getInt(resultSet.getInt("salary")));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return employeeRole;
     }

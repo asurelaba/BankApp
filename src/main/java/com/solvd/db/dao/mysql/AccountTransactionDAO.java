@@ -27,8 +27,9 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             accountTransaction.setAmount(resultSet.getInt("amount"));
             return accountTransaction;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
+        return null;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return accountTransactions;
     }
@@ -87,7 +88,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return null;
     }
@@ -106,7 +107,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             preparedStatement.setInt(5, accountTransaction.getTransactionId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -121,7 +122,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             preparedStatement.setInt(1, accountTransaction.getTransactionId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -143,7 +144,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         return accountTransactions;
     }

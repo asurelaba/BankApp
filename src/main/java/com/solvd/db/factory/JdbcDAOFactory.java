@@ -3,7 +3,6 @@ package com.solvd.db.factory;
 import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.IBaseDAO;
 import com.solvd.db.dao.mysql.*;
-import com.solvd.db.model.Employee;
 
 public class JdbcDAOFactory extends AbstractDAOFactory {
     @Override
@@ -31,8 +30,10 @@ public class JdbcDAOFactory extends AbstractDAOFactory {
                 return new PersonDAO();
             case "transactiontype":
                 return new TransactionTypeDAO();
+            case "customerhasaccount":
+                return new CustomersHasAccountsDAO();
             default:
-                throw new DAONotFoundException( tableName + "DAO not found");
+                throw new DAONotFoundException(tableName + "DAO not found");
         }
     }
 }
