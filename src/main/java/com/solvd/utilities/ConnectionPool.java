@@ -15,11 +15,10 @@ public class ConnectionPool {
     private ArrayBlockingQueue<Connection> pool;
     private ArrayBlockingQueue<Connection> inUseConnections;
     private int maxConnections;
-    private static String url;
-    private static String username;
-    private static String password;
     private static ConnectionPool connectionPool;
-
+    private static String url = DbConfiguration.getUrl();
+    private static String username = DbConfiguration.getUsername();
+    private static String password = DbConfiguration.getPassword();
 
     //load DB properties
     static {

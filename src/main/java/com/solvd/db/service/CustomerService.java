@@ -2,7 +2,6 @@ package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.ICustomerDAO;
-import com.solvd.db.dao.interfaces.ICustomersHasAccounts;
 import com.solvd.db.dao.interfaces.ICustomersHasAccountsDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.*;
