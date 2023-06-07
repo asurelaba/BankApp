@@ -86,9 +86,9 @@ public class AccountDAO implements IAccountDAO {
         String query = "UPDATE " + TABLE_NAME +
                 "SET accounts.balance = ? " +
                 "WHERE account_number = ?";
-        Connection connection = null;
+        Connection connection = CONNECTION_POOL.getConnection();
         try {
-            connection = CONNECTION_POOL.getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDouble(1, account.getBalance());
             preparedStatement.setInt(2, account.getAccountNumber());
@@ -106,9 +106,9 @@ public class AccountDAO implements IAccountDAO {
     public void delete(Account account) {
         String query = "DELETE FROM " + TABLE_NAME +
                 "WHERE account_number = ?";
-        Connection connection = null;
+        Connection connection = CONNECTION_POOL.getConnection();
         try {
-            connection = CONNECTION_POOL.getConnection();
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, account.getAccountNumber());
             preparedStatement.execute();
