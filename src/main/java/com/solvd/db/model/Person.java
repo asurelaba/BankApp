@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Person {
     private int personId;

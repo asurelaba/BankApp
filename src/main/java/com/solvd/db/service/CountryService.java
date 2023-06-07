@@ -19,4 +19,23 @@ public class CountryService {
         }
         return null;
     }
+
+    public void createCountry(Country country){
+        try {
+            ICountryDAO countryDAO = (ICountryDAO) jdbcDAOFactory.getDAO(Country.class.getSimpleName());
+            countryDAO.insert(country);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
+    public Country getCountryByName(String countryName){
+        try {
+            ICountryDAO countryDAO = (ICountryDAO) jdbcDAOFactory.getDAO(Country.class.getSimpleName());
+            return countryDAO.getCountryByName(countryName);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

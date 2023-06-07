@@ -37,4 +37,15 @@ public class AddressService {
         }
         return null;
     }
+
+    public void createAddress(Address address){
+        try{
+            new CityService().createCity(address.getCity());
+            City city = new CityService().getCityByIdWithCountry(7);
+            IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
+            addressDAO.insert(address);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
+    }
 }

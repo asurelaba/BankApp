@@ -1,6 +1,7 @@
 package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
+import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.dao.interfaces.IPersonDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Address;
@@ -27,5 +28,15 @@ public class PersonService {
             System.out.println(e);
         }
         return person;
+    }
+
+    public void createPerson(Person person){
+        try{
+            new AddressService().createAddress(person.getAddress());
+            IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
+            personDAO.insert(person);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
     }
 }

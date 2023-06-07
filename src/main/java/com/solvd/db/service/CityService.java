@@ -34,4 +34,20 @@ public class CityService {
         }
         return null;
     }
+
+    public void createCity(City city){
+        try {
+            ICityDAO cityDAO = (ICityDAO) jdbcDAOFactory.getDAO(City.class.getSimpleName());
+            CountryService countryService = new CountryService();
+            Country country = countryService.getCountryByName(city.getCountry().getCountryName());
+            if(country == null){
+                countryService.createCountry(city.getCountry());
+                country = countryService.getCountryByName(city.getCountry().getCountryName());
+            }
+            city.setCountry(country);
+            cityDAO.insert(city);
+        } catch (DAONotFoundException e) {
+            System.out.println(e);
+        }
+    }
 }
