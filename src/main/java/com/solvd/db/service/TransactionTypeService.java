@@ -6,6 +6,7 @@ import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.TransactionType;
 
 public class TransactionTypeService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public void deleteTransactionType(String type) {

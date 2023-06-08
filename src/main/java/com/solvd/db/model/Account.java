@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class Account {
+
     private int accountNumber;
     private double balance;
     private double minBalance;

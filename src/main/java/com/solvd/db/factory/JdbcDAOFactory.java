@@ -5,6 +5,7 @@ import com.solvd.db.dao.interfaces.IBaseDAO;
 import com.solvd.db.dao.mysql.*;
 
 public class JdbcDAOFactory extends AbstractDAOFactory {
+
     @Override
     public IBaseDAO getDAO(String tableName) throws DAONotFoundException {
         switch (tableName.toLowerCase()) {

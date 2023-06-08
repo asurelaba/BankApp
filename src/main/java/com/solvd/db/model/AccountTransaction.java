@@ -3,6 +3,7 @@ package com.solvd.db.model;
 import java.sql.Date;
 
 public class AccountTransaction {
+
     private int transactionId;
     private int amount;
     private Date transactionDate;

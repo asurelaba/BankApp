@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO implements IAccountDAO {
+
     @Override
     public List<Account> getAccountByTypeId(int accountTypeId) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE account_type_id = ?";
@@ -43,16 +44,22 @@ public class AccountDAO implements IAccountDAO {
     @Override
     public void insert(Account account) {
         String query = "INSERT INTO " + TABLE_NAME + " (balance,minbalance,account_type_id)  VALUES (?,?,?)";
+        Connection connection = CONNECTION_POOL.getConnection();
         try {
-            Connection connection = CONNECTION_POOL.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDouble(1, account.getBalance());
             preparedStatement.setDouble(2, account.getMinBalance());
             preparedStatement.setInt(3, account.getAccountType().getAccountTypeId());
             preparedStatement.execute();
-            CONNECTION_POOL.releaseConnection(connection);
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    account.setAccountNumber(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println("could not insert account" + account + "into table:: " + e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 

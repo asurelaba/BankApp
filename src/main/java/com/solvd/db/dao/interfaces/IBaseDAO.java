@@ -5,6 +5,7 @@ import com.solvd.utilities.ConnectionPool;
 import java.util.List;
 
 public interface IBaseDAO<T> {
+
     ConnectionPool CONNECTION_POOL = ConnectionPool.getInstance();
 
     void insert(T t);

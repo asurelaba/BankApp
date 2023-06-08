@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class AccountType {
+
     private int accountTypeId;
     private String accountType;
 

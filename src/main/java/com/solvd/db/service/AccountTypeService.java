@@ -8,6 +8,7 @@ import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountType;
 
 public class AccountTypeService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public AccountType getAccountTypeForAccount(Account account) {

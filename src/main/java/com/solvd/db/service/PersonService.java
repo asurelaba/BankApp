@@ -9,6 +9,7 @@ import com.solvd.db.model.City;
 import com.solvd.db.model.Person;
 
 public class PersonService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public Person getPersonWithAddress(int personId) {

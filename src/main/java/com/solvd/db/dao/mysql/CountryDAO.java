@@ -3,14 +3,12 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.ICountryDAO;
 import com.solvd.db.model.Country;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDAO implements ICountryDAO {
+
     private Country resultSetToCountry(ResultSet resultSet) {
         Country country = new Country();
         try {
@@ -27,9 +25,14 @@ public class CountryDAO implements ICountryDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(country_name)   VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, country.getCountryName());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    country.setCountryId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

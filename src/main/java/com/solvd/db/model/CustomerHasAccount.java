@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class CustomerHasAccount {
+
     private int customer_id;
     private int account_number;
 

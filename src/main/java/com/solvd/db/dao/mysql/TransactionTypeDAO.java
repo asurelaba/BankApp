@@ -3,14 +3,12 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.ITransactionTypeDAO;
 import com.solvd.db.model.TransactionType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionTypeDAO implements ITransactionTypeDAO {
+
     private TransactionType resultSetToTransactionType(ResultSet resultSet) {
         TransactionType transactionType = new TransactionType();
         try {
@@ -27,9 +25,14 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(transaction_type) VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, transactionType.getTransactionType());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    transactionType.setTransactionTypeId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

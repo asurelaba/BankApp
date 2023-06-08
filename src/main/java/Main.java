@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Main {
+
     public static void main(String[] args) {
 
         //Initial usage of DAO in main
@@ -21,8 +22,6 @@ public class Main {
         account.setAccountType(a);
         new AccountDAO().insert(account);
         System.out.println(new AccountDAO().getAccountByTypeId(2));
-
-        System.out.println(new CustomersHasAccountsDAO().getById(1));
 
         //Using services, person service inturn uses address, city, country DAO
         PersonService personService = new PersonService();
@@ -52,7 +51,7 @@ public class Main {
         CustomerService customerService = new CustomerService();
         customerService.createCustomer(customer);
 
-        //calling upsupported operations
-
+        //calling unsupported operations
+        System.out.println(new CustomersHasAccountsDAO().getById(1));
     }
 }

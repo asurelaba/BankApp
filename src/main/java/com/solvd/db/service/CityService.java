@@ -10,6 +10,7 @@ import com.solvd.db.model.Country;
 import java.util.List;
 
 public class CityService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<City> getAllCities() {

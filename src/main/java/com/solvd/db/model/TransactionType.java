@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class TransactionType {
+
     private int transactionTypeId;
     private String transactionType;
 

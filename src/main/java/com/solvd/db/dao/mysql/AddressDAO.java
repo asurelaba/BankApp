@@ -4,14 +4,12 @@ import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddressDAO implements IAddressDAO {
+
     private Address resultSetToAddress(ResultSet resultSet) {
         Address address = new Address();
         try {
@@ -55,12 +53,17 @@ public class AddressDAO implements IAddressDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(line1, line2, zip_code, city_id) VALUES (?,?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, address.getLine1());
             preparedStatement.setString(2, address.getLine2());
             preparedStatement.setString(3, address.getZipCode());
             preparedStatement.setInt(4, address.getCity().getCityId());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    address.setAddressId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

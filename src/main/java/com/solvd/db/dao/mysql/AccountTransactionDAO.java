@@ -5,14 +5,12 @@ import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountTransaction;
 import com.solvd.db.model.TransactionType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTransactionDAO implements IAccountTransactionDAO {
+
     private AccountTransaction resultSetToAccountTransaction(ResultSet resultSet) {
         AccountTransaction accountTransaction = new AccountTransaction();
         Account account = new Account();
@@ -58,18 +56,24 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     public void insert(AccountTransaction accountTransaction) {
         String query = "INSERT INTO " + TABLE_NAME + " (amount, transaction_date, account_number, transaction_type_id)" +
                 "VALUES (?,?,?,?,?)";
+        Connection connection = CONNECTION_POOL.getConnection();
         try {
-            Connection connection = CONNECTION_POOL.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, accountTransaction.getTransactionId());
             preparedStatement.setInt(2, accountTransaction.getAmount());
             preparedStatement.setDate(3, accountTransaction.getTransactionDate());
             preparedStatement.setInt(4, accountTransaction.getAccount().getAccountNumber());
             preparedStatement.setInt(5, accountTransaction.getTransactionType().getTransactionTypeId());
             preparedStatement.execute();
-            CONNECTION_POOL.releaseConnection(connection);
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    accountTransaction.setTransactionId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println("could not insert account" + accountTransaction + "into table:: " + e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
@@ -84,11 +88,11 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 if (resultSet.next()) {
                     return resultSetToAccountTransaction(resultSet);
                 }
-            } finally {
-                CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
             System.out.println(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
         }
         return null;
     }

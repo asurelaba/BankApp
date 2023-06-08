@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class ConnectionPool {
+
     private ArrayBlockingQueue<Connection> pool;
     private ArrayBlockingQueue<Connection> inUseConnections;
     private int maxConnections;

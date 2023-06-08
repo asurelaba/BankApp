@@ -3,14 +3,12 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IEmployeeDAO;
 import com.solvd.db.model.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO implements IEmployeeDAO {
+
     private Employee resultSetToEmployee(ResultSet resultSet) {
         Employee employee = new Employee();
         try {
@@ -35,11 +33,16 @@ public class EmployeeDAO implements IEmployeeDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(person_id, employee_role_id, manager_id)   VALUES (?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, employee.getPerson().getPersonId());
             preparedStatement.setInt(2, employee.getEmployeeRole().getRoleId());
             preparedStatement.setInt(3, employee.getManager().getEmployeeId());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    employee.setEmployeeId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

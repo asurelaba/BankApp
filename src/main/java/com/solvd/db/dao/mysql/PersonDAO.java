@@ -4,14 +4,12 @@ import com.solvd.db.dao.interfaces.IPersonDAO;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.Person;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDAO implements IPersonDAO {
+
     private Person resultSetToPerson(ResultSet resultSet) {
         Person person = new Person();
         try {
@@ -37,15 +35,20 @@ public class PersonDAO implements IPersonDAO {
         Connection connection = null;
         try {
             connection = CONNECTION_POOL.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, person.getFirstName());
             preparedStatement.setString(2, person.getLastName());
             preparedStatement.setDate(3, person.getDateOfBirth());
             preparedStatement.setString(4, person.getPhoneNumber());
             preparedStatement.setString(5, person.getEmail());
             preparedStatement.setInt(6, person.getAddress().getAddressId());
-            preparedStatement.setInt(7, person.getPersonId());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    System.out.println("person id" + resultSet.getInt(1));
+                    person.setPersonId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Update failed" + e);
         } finally {

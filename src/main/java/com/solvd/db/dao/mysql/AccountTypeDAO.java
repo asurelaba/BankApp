@@ -3,14 +3,12 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IAccountTypeDAO;
 import com.solvd.db.model.AccountType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTypeDAO implements IAccountTypeDAO {
+
     private AccountType resultSetToAccountType(ResultSet resultSet) {
         AccountType accountType = new AccountType();
         try {
@@ -47,9 +45,14 @@ public class AccountTypeDAO implements IAccountTypeDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(account_type) VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, accountType.getAccountType());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    accountType.setAccountTypeId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

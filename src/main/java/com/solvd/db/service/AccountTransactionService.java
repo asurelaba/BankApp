@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTransactionService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<AccountTransaction> getAccountTransactionsByAccountNumber(int accountNumber) {

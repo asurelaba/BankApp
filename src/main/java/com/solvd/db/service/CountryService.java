@@ -8,6 +8,7 @@ import com.solvd.db.model.Country;
 import java.util.List;
 
 public class CountryService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<Country> getAllCountries() {

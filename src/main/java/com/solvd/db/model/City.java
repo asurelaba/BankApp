@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class City {
+
     private int cityId;
     private String cityName;
     private Country country;

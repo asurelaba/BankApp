@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRoleDAO implements IEmployeeRoleDAO {
+
     private EmployeeRole resultSetToEmployeeRole(ResultSet resultSet) {
         EmployeeRole employeeRole = new EmployeeRole();
         try {
@@ -34,6 +35,11 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
             preparedStatement.setString(2, employeeRole.getJobDescription());
             preparedStatement.setInt(3, employeeRole.getSalary());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    employeeRole.setRoleId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

@@ -4,14 +4,12 @@ import com.solvd.db.dao.interfaces.ICustomerDAO;
 import com.solvd.db.model.Customer;
 import com.solvd.db.model.Person;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements ICustomerDAO {
+
     private Customer resultSetToCustomer(ResultSet resultSet) {
         Customer customer = new Customer();
         try {
@@ -30,9 +28,14 @@ public class CustomerDAO implements ICustomerDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(person_id)   VALUES (?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, customer.getPerson().getPersonId());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if(resultSet.next()){
+                    customer.setCustomerId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

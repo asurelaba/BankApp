@@ -4,14 +4,12 @@ import com.solvd.db.dao.interfaces.ICityDAO;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CityDAO implements ICityDAO {
+
     private City resultSetToCity(ResultSet resultSet) {
         City city = null;
         try {
@@ -32,10 +30,15 @@ public class CityDAO implements ICityDAO {
         String query = "INSERT INTO " + TABLE_NAME + "(city_name, country_id)  VALUES (?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, city.getCityName());
             preparedStatement.setInt(2, city.getCountry().getCountryId());
             preparedStatement.execute();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    city.setCityId(resultSet.getInt(1));
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {

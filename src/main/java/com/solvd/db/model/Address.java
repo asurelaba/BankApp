@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class Address {
+
     private int addressId;
     private String line1;
     private String line2;

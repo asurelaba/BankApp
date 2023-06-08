@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<Address> getAllAddressesByCity(City city) {

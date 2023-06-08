@@ -6,6 +6,7 @@ import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Account;
 
 public class AccountService {
+
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public Account getAccountByAccountNumber(int accountNumber) {

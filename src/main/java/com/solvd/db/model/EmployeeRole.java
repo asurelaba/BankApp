@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class EmployeeRole {
+
     private int roleId;
     private String roleName;
     private String jobDescription;

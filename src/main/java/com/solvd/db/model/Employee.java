@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 public class Employee {
+
     private int employeeId;
     private Person person;
     private EmployeeRole employeeRole;
