@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customers>
+    <customer id = "1">
+        <person id = "2">
+            <firstName>ada</firstName>
+            <lastName>adalast</lastName>
+            <dob>1999-09-09</dob>
+            <phoneNumber>1231231234</phoneNumber>
+            <email>adalast@abcd.com</email>
+            <address id = "3">
+                <line1>111 ada street</line1>
+                <line2>apt 9</line2>
+                <zipcode>12345</zipcode>
+                <city id = "3">
+                    <cityName>pittsburgh</cityName>
+                    <country id = "1">
+                        <countryName>usa</countryName>
+                    </country>
+                </city>
+            </address>
+        </person>
+        <accounts>
+            <account>
+                <accountNumber>23456789</accountNumber>
+                <balance>123456</balance>
+                <minbalance>500</minbalance>
+                <accountType id = "2">
+                    <typeName>checking</typeName>
+                </accountType>
+            </account>
+            <account>
+                <accountNumber>99999999</accountNumber>
+                <balance>3000</balance>
+                <minbalance>100</minbalance>
+                <accountType id = "1">
+                    <typeName>saving</typeName>
+                </accountType>
+            </account>
+        </accounts>
+    </customer>
+</customers>
