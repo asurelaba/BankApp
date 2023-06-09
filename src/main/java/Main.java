@@ -6,6 +6,7 @@ import com.solvd.db.service.PersonService;
 import com.solvd.db.validateparsexml.ParseXMl;
 import com.solvd.db.validateparsexml.ValidateXml;
 
+import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,8 +58,10 @@ public class Main {
         System.out.println(new CustomersHasAccountsDAO().getById(1));
 
         //validate and parse Customers xml
-        if (new ValidateXml().isXmlValid()) {
-            System.out.println(new ParseXMl().getCustomersFromXML());
+        File customerSchema = new File("src/main/resources/xsdschema/customerxsd.xml");
+        File customerXML = new File("src/main/resources/inputxml/customer.xml");
+        if (new ValidateXml().isXmlValid(customerXML, customerSchema)) {
+            System.out.println(new ParseXMl().getCustomersFromXML(customerXML));
         }
     }
 }

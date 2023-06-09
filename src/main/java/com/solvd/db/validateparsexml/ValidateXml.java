@@ -12,12 +12,12 @@ import java.io.IOException;
 
 public class ValidateXml {
 
-    public boolean isXmlValid() {
+    public boolean isXmlValid(File customerXMl, File customerSchema) {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
-            Schema schema = schemaFactory.newSchema(new File("src/main/resources/xsdschema/customerxsd.xml"));
+            Schema schema = schemaFactory.newSchema(customerSchema);
             Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(new File("src/main/resources/inputxml/customer.xml")));
+            validator.validate(new StreamSource(customerXMl));
             return true;
         } catch (SAXException e) {
             e.printStackTrace();

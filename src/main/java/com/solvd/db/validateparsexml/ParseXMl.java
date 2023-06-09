@@ -9,6 +9,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -19,18 +20,17 @@ import java.util.List;
 
 public class ParseXMl {
 
-    public List<Customer> getCustomersFromXML() {
+    public List<Customer> getCustomersFromXML(File customerXML) {
         List<Customer> customers = new ArrayList<>();
         Customer customer = null;
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         try {
-            InputStream inputStream = new FileInputStream("src/main/resources/inputxml/customer.xml");
+            InputStream inputStream = new FileInputStream(customerXML);
             XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(inputStream);
             while (xmlEventReader.hasNext()) {
                 XMLEvent xmlEvent = xmlEventReader.nextEvent();
                 if (xmlEvent.isStartElement()) {
                     StartElement startElement = xmlEvent.asStartElement();
-                    System.out.println(startElement.getName().getLocalPart());
                     Attribute attributeId = startElement.getAttributeByName(new QName("id"));
                     switch (startElement.getName().getLocalPart().toLowerCase()) {
                         case "customers":
