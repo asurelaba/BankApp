@@ -3,7 +3,10 @@ import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.model.*;
 import com.solvd.db.service.CustomerService;
 import com.solvd.db.service.PersonService;
+import com.solvd.db.validateparsexml.ParseXMl;
+import com.solvd.db.validateparsexml.ValidateXml;
 
+import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -53,5 +56,12 @@ public class Main {
 
         //calling unsupported operations
         System.out.println(new CustomersHasAccountsDAO().getById(1));
+
+        //validate and parse Customers xml
+        File customerSchema = new File("src/main/resources/xsdschema/customerxsd.xsd");
+        File customerXML = new File("src/main/resources/inputxml/customer.xml");
+        if (new ValidateXml().isXmlValid(customerXML, customerSchema)) {
+            System.out.println(new ParseXMl().getCustomersFromXML(customerXML));
+        }
     }
 }
