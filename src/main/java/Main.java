@@ -58,7 +58,7 @@ public class Main {
         System.out.println(new CustomersHasAccountsDAO().getById(1));
 
         //validate and parse Customers xml
-        File customerSchema = new File("src/main/resources/xsdschema/customerxsd.xml");
+        File customerSchema = new File("src/main/resources/xsdschema/customerxsd.xsd");
         File customerXML = new File("src/main/resources/inputxml/customer.xml");
         if (new ValidateXml().isXmlValid(customerXML, customerSchema)) {
             System.out.println(new ParseXMl().getCustomersFromXML(customerXML));
