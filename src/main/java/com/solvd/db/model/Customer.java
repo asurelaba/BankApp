@@ -38,6 +38,7 @@ public class Customer {
         return "Customer{" +
                 "customerId=" + customerId +
                 ", person=" + person +
+                ", accounts=" + accounts +
                 '}';
     }
 }
