@@ -1,9 +1,16 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class City {
 
+    @XmlAttribute(name = "id")
     private int cityId;
+    @XmlElement(name = "cityName")
     private String cityName;
+    @XmlElement(name = "country")
     private Country country;
 
     public int getCityId() {

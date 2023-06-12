@@ -1,8 +1,14 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AccountType {
 
+    @XmlAttribute(name = "id")
     private int accountTypeId;
+    @XmlElement(name = "typeName")
     private String accountType;
 
     public int getAccountTypeId() {

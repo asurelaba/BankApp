@@ -1,11 +1,13 @@
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
+import com.solvd.db.jaxbxml.ParseXMLJaxB;
 import com.solvd.db.model.*;
 import com.solvd.db.service.CustomerService;
 import com.solvd.db.service.PersonService;
 import com.solvd.db.validateparsexml.ParseXMl;
 import com.solvd.db.validateparsexml.ValidateXml;
 
+import javax.xml.transform.Source;
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
@@ -63,5 +65,13 @@ public class Main {
         if (new ValidateXml().isXmlValid(customerXML, customerSchema)) {
             System.out.println(new ParseXMl().getCustomersFromXML(customerXML));
         }
+
+        //marshall and unmarshall using JAXB
+        ParseXMLJaxB<Customer> parseXMLJaxB = new ParseXMLJaxB();
+        File customerJaxBXml = new File("src/main/resources/inputxml/customerJaxbInput.xml");
+        Customer customer1 = parseXMLJaxB.unmarshall(Customer.class, customerJaxBXml);
+        System.out.println("Customer object from XML: " + customer1);
+        File outputFile = new File("target/customer.xml");
+        parseXMLJaxB.marshall(customer1, outputFile);
     }
 }
