@@ -8,12 +8,16 @@ public class Address {
 
     @XmlAttribute(name = "id")
     private int addressId;
+
     @XmlElement(name = "line1")
     private String line1;
+
     @XmlElement(name = "line2")
     private String line2;
+
     @XmlElement(name = "zipcode")
     private String zipCode;
+
     @XmlElement(name = "city")
     private City city;
 

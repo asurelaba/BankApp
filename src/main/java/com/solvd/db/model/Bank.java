@@ -10,9 +10,11 @@ public class Bank {
     @XmlElementWrapper(name = "customers")
     @XmlElement(name = "customer", type = Customer.class)
     List<Customer> customers;
+
     @XmlElementWrapper(name = "employees")
     @XmlElement(name = "employee", type = Employee.class)
     List<Employee> employees;
+
     @XmlElementWrapper(name = "accounts")
     @XmlElement(name = "account", type = Account.class)
     List<Account> accounts;

@@ -8,10 +8,13 @@ public class Employee {
 
     @XmlAttribute(name = "id")
     private int employeeId;
+
     @XmlElement(name = "person")
     private Person person;
+
     @XmlTransient
     private EmployeeRole employeeRole;
+
     @XmlElement(name = "manager")
     private Employee manager;
 

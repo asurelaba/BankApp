@@ -11,10 +11,13 @@ public class Account {
 
     @XmlElement(name = "accountNumber")
     private int accountNumber;
+
     @XmlElement(name = "balance")
     private double balance;
+
     @XmlElement(name = "minbalance")
     private double minBalance;
+
     @XmlElement(name = "accountType")
     private AccountType accountType;
 

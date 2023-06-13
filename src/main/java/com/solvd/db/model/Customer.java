@@ -10,8 +10,10 @@ public class Customer {
 
     @XmlAttribute(name = "id")
     private int customerId;
+
     @XmlElement(name = "person")
     private Person person;
+
     @XmlElementWrapper(name = "accounts")
     @XmlElement(name = "account", type = Account.class)
     private List<Account> accounts = new ArrayList<>();

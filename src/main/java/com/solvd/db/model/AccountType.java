@@ -8,6 +8,7 @@ public class AccountType {
 
     @XmlAttribute(name = "id")
     private int accountTypeId;
+
     @XmlElement(name = "typeName")
     private String accountType;
 

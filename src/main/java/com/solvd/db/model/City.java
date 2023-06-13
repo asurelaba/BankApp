@@ -8,8 +8,10 @@ public class City {
 
     @XmlAttribute(name = "id")
     private int cityId;
+
     @XmlElement(name = "cityName")
     private String cityName;
+
     @XmlElement(name = "country")
     private Country country;
 

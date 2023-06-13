@@ -13,17 +13,23 @@ public class Person {
 
     @XmlAttribute(name = "id")
     private int personId;
+
     @XmlElement(name = "firstName")
     private String firstName;
+
     @XmlElement(name = "lastName")
     private String lastName;
+
     @XmlElement(name = "dob")
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date dateOfBirth;
+
     @XmlElement(name = "phoneNumber")
     private String phoneNumber;
+
     @XmlElement(name = "email")
     private String email;
+
     @XmlElement(name = "address")
     private Address address;
 

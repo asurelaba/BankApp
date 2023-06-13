@@ -8,6 +8,7 @@ public class TransactionType {
 
     @XmlAttribute(name = "id")
     private int transactionTypeId;
+
     @XmlElement(name = "transactionType")
     private String transactionType;
 

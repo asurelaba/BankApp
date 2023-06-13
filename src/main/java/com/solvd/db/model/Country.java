@@ -8,6 +8,7 @@ public class Country {
 
     @XmlAttribute(name = "id")
     private int countryId;
+
     @XmlElement(name = "countryName")
     private String countryName;
 
