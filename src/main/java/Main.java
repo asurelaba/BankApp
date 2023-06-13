@@ -84,7 +84,6 @@ public class Main {
         Bank bank = new Bank();
         bank.setEmployees(employees);
         ParseXMLJaxB<Bank> parseXMLJaxBEmployee = new ParseXMLJaxB();
-        //employees.forEach();
         File employeesOutputFile = new File("target/employee.xml");
         parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
     }
