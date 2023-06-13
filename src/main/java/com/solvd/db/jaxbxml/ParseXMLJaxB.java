@@ -1,10 +1,13 @@
 package com.solvd.db.jaxbxml;
 
+import com.solvd.db.model.Bank;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.util.List;
 
 public class ParseXMLJaxB<T> {
 

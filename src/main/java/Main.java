@@ -3,15 +3,20 @@ import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.jaxbxml.ParseXMLJaxB;
 import com.solvd.db.model.*;
 import com.solvd.db.service.CustomerService;
+import com.solvd.db.service.EmployeeService;
 import com.solvd.db.service.PersonService;
 import com.solvd.db.validateparsexml.ParseXMl;
 import com.solvd.db.validateparsexml.ValidateXml;
 
 import javax.xml.transform.Source;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Main {
 
@@ -73,5 +78,14 @@ public class Main {
         System.out.println("Customer object from XML: " + customer1);
         File outputFile = new File("target/customer.xml");
         parseXMLJaxB.marshall(customer1, outputFile);
+
+        EmployeeService employeeService = new EmployeeService();
+        List<Employee> employees = employeeService.getAllEmployeesWithManager();
+        Bank bank = new Bank();
+        bank.setEmployees(employees);
+        ParseXMLJaxB<Bank> parseXMLJaxBEmployee = new ParseXMLJaxB();
+        //employees.forEach();
+        File employeesOutputFile = new File("target/employee.xml");
+        parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
     }
 }

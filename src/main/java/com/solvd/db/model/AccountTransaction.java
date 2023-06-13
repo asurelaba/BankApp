@@ -1,13 +1,20 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.*;
 import java.sql.Date;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AccountTransaction {
 
+    @XmlAttribute(name = "id")
     private int transactionId;
+    @XmlElement(name = "amount")
     private int amount;
+    @XmlElement(name = "transactionDate")
     private Date transactionDate;
     private Account account;
+
     private TransactionType transactionType;
 
     public int getTransactionId() {

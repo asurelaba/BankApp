@@ -1,10 +1,18 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Employee {
 
+    @XmlAttribute(name = "id")
     private int employeeId;
+    @XmlElement(name = "person")
     private Person person;
+    @XmlTransient
     private EmployeeRole employeeRole;
+    @XmlElement(name = "manager")
     private Employee manager;
 
     public int getEmployeeId() {
