@@ -1,15 +1,22 @@
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
+import com.solvd.db.jaxbxml.ParseXMLJaxB;
 import com.solvd.db.model.*;
 import com.solvd.db.service.CustomerService;
+import com.solvd.db.service.EmployeeService;
 import com.solvd.db.service.PersonService;
 import com.solvd.db.validateparsexml.ParseXMl;
 import com.solvd.db.validateparsexml.ValidateXml;
 
+import javax.xml.transform.Source;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Main {
 
@@ -63,5 +70,21 @@ public class Main {
         if (new ValidateXml().isXmlValid(customerXML, customerSchema)) {
             System.out.println(new ParseXMl().getCustomersFromXML(customerXML));
         }
+
+        //marshall and unmarshall using JAXB
+        ParseXMLJaxB<Customer> parseXMLJaxB = new ParseXMLJaxB();
+        File customerJaxBXml = new File("src/main/resources/inputxml/customerJaxbInput.xml");
+        Customer customer1 = parseXMLJaxB.unmarshall(Customer.class, customerJaxBXml);
+        System.out.println("Customer object from XML: " + customer1);
+        File outputFile = new File("target/customer.xml");
+        parseXMLJaxB.marshall(customer1, outputFile);
+
+        EmployeeService employeeService = new EmployeeService();
+        List<Employee> employees = employeeService.getAllEmployeesWithManager();
+        Bank bank = new Bank();
+        bank.setEmployees(employees);
+        ParseXMLJaxB<Bank> parseXMLJaxBEmployee = new ParseXMLJaxB();
+        File employeesOutputFile = new File("target/employee.xml");
+        parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
     }
 }

@@ -1,10 +1,24 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Account {
 
+    @XmlElement(name = "accountNumber")
     private int accountNumber;
+
+    @XmlElement(name = "balance")
     private double balance;
+
+    @XmlElement(name = "minbalance")
     private double minBalance;
+
+    @XmlElement(name = "accountType")
     private AccountType accountType;
 
     public int getAccountNumber() {

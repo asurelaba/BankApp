@@ -1,8 +1,15 @@
 package com.solvd.db.model;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TransactionType {
 
+    @XmlAttribute(name = "id")
     private int transactionTypeId;
+
+    @XmlElement(name = "transactionType")
     private String transactionType;
 
     public int getTransactionTypeId() {
