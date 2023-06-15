@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ParseJson<Entity> {
+    
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public void serialize(Entity entity, File outputFile) {
