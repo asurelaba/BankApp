@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -9,14 +12,17 @@ public class Bank {
 
     @XmlElementWrapper(name = "customers")
     @XmlElement(name = "customer", type = Customer.class)
+    @JsonProperty("customers")
     List<Customer> customers;
 
     @XmlElementWrapper(name = "employees")
     @XmlElement(name = "employee", type = Employee.class)
+    @JsonProperty("employees")
     List<Employee> employees;
 
     @XmlElementWrapper(name = "accounts")
     @XmlElement(name = "account", type = Account.class)
+    @JsonProperty("accounts")
     List<Account> accounts;
 
     public List<Customer> getCustomers() {
@@ -41,5 +47,14 @@ public class Bank {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "customers=" + customers + "\n" +
+                ", employees=" + employees + "\n" +
+                ", accounts=" + accounts + "\n" +
+                '}';
     }
 }

@@ -1,21 +1,29 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties({"roleId","jobDescription"})
 public class EmployeeRole {
 
     @XmlAttribute(name = "id")
     private int roleId;
 
     @XmlElement(name = "roleName")
+    @JsonProperty("roleName")
     private String roleName;
 
     @XmlElement(name = "jobDescription")
     private String jobDescription;
 
     @XmlElement(name = "salary")
+    @JsonProperty("salary")
     private int salary;
 
     public int getRoleId() {

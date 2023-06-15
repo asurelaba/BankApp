@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -7,18 +10,23 @@ import javax.xml.bind.annotation.*;
 public class Address {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("addressId")
     private int addressId;
 
     @XmlElement(name = "line1")
+    @JsonProperty("line1")
     private String line1;
 
     @XmlElement(name = "line2")
+    @JsonProperty("line2")
     private String line2;
 
     @XmlElement(name = "zipcode")
+    @JsonProperty("zipCode")
     private String zipCode;
 
     @XmlElement(name = "city")
+    @JsonProperty("city")
     private City city;
 
     public int getAddressId() {

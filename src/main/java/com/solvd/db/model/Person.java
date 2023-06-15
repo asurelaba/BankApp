@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.solvd.db.jaxbxml.DateAdapter;
 
 import javax.xml.bind.annotation.*;
@@ -9,28 +12,37 @@ import java.time.LocalDate;
 
 @XmlRootElement(name = "person")
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("person")
 public class Person {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("personId")
     private int personId;
 
     @XmlElement(name = "firstName")
+    @JsonProperty("firstName")
     private String firstName;
 
     @XmlElement(name = "lastName")
+    @JsonProperty("lastName")
     private String lastName;
 
     @XmlElement(name = "dob")
     @XmlJavaTypeAdapter(DateAdapter.class)
+    @JsonProperty("dateOfBirth")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dateOfBirth;
 
     @XmlElement(name = "phoneNumber")
+    @JsonProperty("phoneNumber")
     private String phoneNumber;
 
     @XmlElement(name = "email")
+    @JsonProperty("email")
     private String email;
 
     @XmlElement(name = "address")
+    @JsonProperty("address")
     private Address address;
 
     public int getPersonId() {

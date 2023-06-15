@@ -1,15 +1,22 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName("transactionType")
 public class TransactionType {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("transactionTypeId")
     private int transactionTypeId;
 
     @XmlElement(name = "transactionType")
+    @JsonProperty("transactionType")
     private String transactionType;
 
     public int getTransactionTypeId() {

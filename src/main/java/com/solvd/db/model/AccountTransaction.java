@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 import java.sql.Date;
 
@@ -8,18 +11,23 @@ import java.sql.Date;
 public class AccountTransaction {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("transactionId")
     private int transactionId;
 
     @XmlElement(name = "amount")
+    @JsonProperty("amount")
     private int amount;
 
     @XmlElement(name = "transactionDate")
+    @JsonProperty("transactionDate")
     private Date transactionDate;
 
     @XmlElement(name = "account")
+    @JsonProperty("account")
     private Account account;
 
     @XmlElement(name = "transactionType")
+    @JsonProperty("transactionType")
     private TransactionType transactionType;
 
     public int getTransactionId() {

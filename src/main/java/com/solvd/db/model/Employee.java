@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -7,15 +10,19 @@ import javax.xml.bind.annotation.*;
 public class Employee {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("employeeId")
     private int employeeId;
 
     @XmlElement(name = "person")
+    @JsonProperty("person")
     private Person person;
 
     @XmlTransient
+    @JsonProperty("employeeRole")
     private EmployeeRole employeeRole;
 
     @XmlElement(name = "manager")
+    @JsonIgnore
     private Employee manager;
 
     public int getEmployeeId() {
@@ -53,10 +60,10 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeId=" + employeeId +
-                ", person=" + person +
-                ", employeeRole=" + employeeRole +
-                ", manager=" + manager +
+                "employeeId=" + employeeId + "\n" +
+                ", person=" + person + "\n" +
+                ", employeeRole=" + employeeRole + "\n" +
+                ", manager=" + manager + "\n" +
                 '}';
     }
 }

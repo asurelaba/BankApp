@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -10,15 +13,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Account {
 
     @XmlElement(name = "accountNumber")
+    @JsonProperty("accountNumber")
     private int accountNumber;
 
     @XmlElement(name = "balance")
+    @JsonProperty("balance")
     private double balance;
 
     @XmlElement(name = "minbalance")
+    @JsonProperty("minBalance")
     private double minBalance;
 
     @XmlElement(name = "accountType")
+    @JsonProperty("accountType")
     private AccountType accountType;
 
     public int getAccountNumber() {

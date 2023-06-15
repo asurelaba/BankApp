@@ -1,10 +1,12 @@
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
+import com.solvd.db.jackson.ParseJson;
 import com.solvd.db.jaxbxml.ParseXMLJaxB;
 import com.solvd.db.model.*;
-import com.solvd.db.service.CustomerService;
-import com.solvd.db.service.EmployeeService;
-import com.solvd.db.service.PersonService;
+import com.solvd.db.service.*;
 import com.solvd.db.validateparsexml.ParseXMl;
 import com.solvd.db.validateparsexml.ValidateXml;
 
@@ -86,5 +88,26 @@ public class Main {
         ParseXMLJaxB<Bank> parseXMLJaxBEmployee = new ParseXMLJaxB();
         File employeesOutputFile = new File("target/employee.xml");
         parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
+
+        //serialize and deserialize json with Jackson
+        AccountService accountService = new AccountService();
+        Account account1 = accountService.getAccountByAccountNumber(20230001);
+        ParseJson<Account> parseJson = new ParseJson<>();
+        File ouputJsonFile = new File("target/account.json");
+        parseJson.serialize(account1, ouputJsonFile);
+
+        File outputJsonCustomer = new File("target/customer.json");
+        ParseJson<Customer> parseJsonCustomer = new ParseJson<>();
+        parseJsonCustomer.serialize(customer1, outputJsonCustomer);
+
+        AccountTransactionService accountTransactionService = new AccountTransactionService();
+        List<AccountTransaction> accountTransactions = accountTransactionService.getAccountTransactionsByAccountNumber(20230001);
+        ParseJson<AccountTransaction> accountTransactionParseJson = new ParseJson<>();
+        File outputJsonTransactions = new File("target/transaction.json");
+        accountTransactionParseJson.serialize(accountTransactions, outputJsonTransactions);
+
+        ParseJson<Bank> bankParseJson = new ParseJson<>();
+        File bankInputFile = new File("src/main/resources/inputjson/bank.json");
+        System.out.println(bankParseJson.deserialize(bankInputFile, Bank.class));
     }
 }
