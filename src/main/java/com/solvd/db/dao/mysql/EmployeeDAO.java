@@ -2,12 +2,16 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.IEmployeeDAO;
 import com.solvd.db.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAO implements IEmployeeDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeDAO.class);
 
     private Employee resultSetToEmployee(ResultSet resultSet) {
         Employee employee = new Employee();
@@ -23,7 +27,7 @@ public class EmployeeDAO implements IEmployeeDAO {
             manager.setEmployeeId(resultSet.getInt("manager_id"));
             employee.setManager(manager);
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return employee;
     }
@@ -44,7 +48,7 @@ public class EmployeeDAO implements IEmployeeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -63,7 +67,7 @@ public class EmployeeDAO implements IEmployeeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -83,7 +87,7 @@ public class EmployeeDAO implements IEmployeeDAO {
             preparedStatement.setInt(4, employee.getEmployeeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -99,7 +103,7 @@ public class EmployeeDAO implements IEmployeeDAO {
             preparedStatement.setInt(1, employee.getEmployeeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from employees failed" + e);
+            LOGGER.error("delete from employees failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -118,7 +122,7 @@ public class EmployeeDAO implements IEmployeeDAO {
                 employees.add(resultSetToEmployee(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -138,7 +142,7 @@ public class EmployeeDAO implements IEmployeeDAO {
                 employees.add(resultSetToEmployee(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

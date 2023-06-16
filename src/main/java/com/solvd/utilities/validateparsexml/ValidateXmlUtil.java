@@ -1,4 +1,4 @@
-package com.solvd.db.validateparsexml;
+package com.solvd.utilities.validateparsexml;
 
 import org.xml.sax.SAXException;
 
@@ -10,7 +10,7 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 
-public class ValidateXml {
+public class ValidateXmlUtil {
 
     public boolean isXmlValid(File customerXMl, File customerSchema) {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

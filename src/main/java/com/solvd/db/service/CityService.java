@@ -6,11 +6,14 @@ import com.solvd.db.dao.interfaces.ICountryDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class CityService {
 
+    private static final Logger LOGGER = LogManager.getLogger(CityService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<City> getAllCities() {
@@ -18,7 +21,7 @@ public class CityService {
             ICityDAO cityDAO = (ICityDAO) jdbcDAOFactory.getDAO(City.class.getSimpleName());
             return cityDAO.getAll();
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }
@@ -31,7 +34,7 @@ public class CityService {
             city.setCountry(countryDAO.getById(city.getCountry().getCountryId()));
             return city;
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }
@@ -48,7 +51,7 @@ public class CityService {
             city.setCountry(country);
             cityDAO.insert(city);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
     }
 }

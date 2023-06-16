@@ -1,4 +1,4 @@
-package com.solvd.db.validateparsexml;
+package com.solvd.utilities.validateparsexml;
 
 import com.solvd.db.model.*;
 
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParseXMl {
+public class XMLParserUtil {
 
     public List<Customer> getCustomersFromXML(File customerXML) {
         List<Customer> customers = new ArrayList<>();

@@ -2,12 +2,16 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ITransactionTypeDAO;
 import com.solvd.db.model.TransactionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionTypeDAO implements ITransactionTypeDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(TransactionTypeDAO.class);
 
     private TransactionType resultSetToTransactionType(ResultSet resultSet) {
         TransactionType transactionType = new TransactionType();
@@ -15,7 +19,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
             transactionType.setTransactionTypeId(resultSet.getInt(1));
             transactionType.setTransactionType(resultSet.getString(2));
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return transactionType;
     }
@@ -34,7 +38,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -53,7 +57,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -71,7 +75,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
             preparedStatement.setInt(2, transactionType.getTransactionTypeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -87,7 +91,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
             preparedStatement.setInt(1, transactionType.getTransactionTypeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from transaction_types failed" + e);
+            LOGGER.error("delete from transaction_types failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -106,7 +110,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
                 transactionTypes.add(resultSetToTransactionType(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -126,7 +130,7 @@ public class TransactionTypeDAO implements ITransactionTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

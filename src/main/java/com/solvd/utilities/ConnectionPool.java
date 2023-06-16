@@ -1,5 +1,8 @@
 package com.solvd.utilities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class ConnectionPool {
 
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private ArrayBlockingQueue<Connection> pool;
     private ArrayBlockingQueue<Connection> inUseConnections;
     private int maxConnections;
@@ -41,7 +45,7 @@ public class ConnectionPool {
             try {
                 connection = pool.take();
             } catch (InterruptedException e) {
-                System.out.println(e);
+                LOGGER.error(e);
             }
             inUseConnections.add(connection);
             return connection;
@@ -54,8 +58,8 @@ public class ConnectionPool {
                 inUseConnections.add(connection);
                 return connection;
             } catch (SQLException e) {
-                System.out.println("exception in get Connection");
-                System.out.println(e);
+                LOGGER.error("exception in get Connection");
+                LOGGER.error(e);
             }
         }
         return null;

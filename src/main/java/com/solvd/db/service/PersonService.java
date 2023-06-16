@@ -7,15 +7,18 @@ import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PersonService {
 
+    private static final Logger LOGGER = LogManager.getLogger(PersonService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public Person getPersonWithAddress(int personId) {
         Person person = null;
         try {
-            System.out.println("looking for " + Person.class.getSimpleName());
+            LOGGER.info("looking for " + Person.class.getSimpleName());
             IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
 
             person = personDAO.getById(personId);
@@ -26,7 +29,7 @@ public class PersonService {
             address.setCity(city);
             person.setAddress(address);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return person;
     }
@@ -37,7 +40,7 @@ public class PersonService {
             IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
             personDAO.insert(person);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
     }
 }

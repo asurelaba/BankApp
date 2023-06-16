@@ -1,4 +1,4 @@
-package com.solvd.db.jaxbxml;
+package com.solvd.utilities.jaxbxml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.sql.Date;
