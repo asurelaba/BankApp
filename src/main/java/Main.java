@@ -1,3 +1,6 @@
+import com.solvd.db.dao.interfaces.IAccountDAO;
+import com.solvd.db.dao.interfaces.IAccountTypeDAO;
+import com.solvd.db.dao.interfaces.IBaseDAO;
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.model.*;
@@ -6,10 +9,16 @@ import com.solvd.utilities.jackson.JsonParserUtil;
 import com.solvd.utilities.jaxbxml.XmlJAXBParser;
 import com.solvd.utilities.validateparsexml.ValidateXmlUtil;
 import com.solvd.utilities.validateparsexml.XMLParserUtil;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -100,5 +109,23 @@ public class Main {
 
         File bankInputFile = new File("src/main/resources/inputjson/bank.json");
         LOGGER.info(new JsonParserUtil<Bank>().deserialize(bankInputFile, Bank.class));
+
+        try(Reader reader = Resources.getResourceAsReader("mybatis-config.xml")){
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+            IAccountDAO accountDAO = sqlSession.getMapper(IAccountDAO.class);
+            System.out.println(accountDAO.getById(20230003));
+            Account account2 = new Account();
+            IAccountTypeDAO accountTypeDAO = sqlSession.getMapper(IAccountTypeDAO.class);
+            account2.setAccountType(accountTypeDAO.getById(1));
+            account2.setBalance(10000000);
+            account2.setMinBalance(90);
+            accountDAO.insert(account2);
+            sqlSession.commit();
+            System.out.println(account2.getAccountNumber());
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
     }
 }

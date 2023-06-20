@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.db.dao.interfaces.IAccountTypeDAO">
+    <resultMap id="AccountTypeResultMap" type="AccountType">
+        <id property="accountTypeId" column="account_type_id"/>
+        <result property="accountType" column="account_type"/>
+    </resultMap>
+    <select id="getById" parameterType="int" resultMap="AccountTypeResultMap">
+        SELECT * FROM account_types WHERE account_type_id = #{id}
+    </select>
+</mapper>
