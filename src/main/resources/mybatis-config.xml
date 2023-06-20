@@ -1,0 +1,37 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+        <properties resource="db.properties"/>
+        <typeAliases>
+                <typeAlias alias="Account" type="com.solvd.db.model.Account"/>
+                <typeAlias alias="AccountTransaction" type="com.solvd.db.model.AccountTransaction"/>
+                <typeAlias alias="AccountType" type="com.solvd.db.model.AccountType"/>
+                <typeAlias alias="Address" type="com.solvd.db.model.Address"/>
+                <typeAlias alias="City" type="com.solvd.db.model.City"/>
+                <typeAlias alias="Country" type="com.solvd.db.model.Country"/>
+                <typeAlias alias="Customer" type="com.solvd.db.model.Customer"/>
+                <typeAlias alias="CustomerHasAccount" type="com.solvd.db.model.CustomerHasAccount"/>
+                <typeAlias alias="Employee" type="com.solvd.db.model.Employee"/>
+                <typeAlias alias="EmployeeRole" type="com.solvd.db.model.EmployeeRole"/>
+                <typeAlias alias="Person" type="com.solvd.db.model.Person"/>
+                <typeAlias alias="TransactionType" type="com.solvd.db.model.TransactionType"/>
+        </typeAliases>
+        <environments default = "development">
+                <environment id = "development">
+                        <transactionManager type = "JDBC"/>
+                        <dataSource type = "POOLED">
+                                <property name = "driver" value = "${driver}"/>
+                                <property name = "url" value = "${url}"/>
+                                <property name = "username" value = "${user}"/>
+                                <property name = "password" value = "${password}"/>
+                        </dataSource>
+                </environment>
+        </environments>
+        <mappers>
+                <mapper resource="mybatis-mapper/account-mapper.xml"/>
+                <mapper resource="mybatis-mapper/account-type-mapper.xml"/>
+        </mappers>
+</configuration>
