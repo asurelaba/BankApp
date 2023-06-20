@@ -1,5 +1,9 @@
 package com.solvd.utilities;
 
+import com.solvd.db.service.AddressService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,6 +11,7 @@ import java.util.Properties;
 
 public class DbConfiguration {
 
+    private static final Logger LOGGER = LogManager.getLogger(DbConfiguration.class);
     private static String url;
     private static String username;
     private static String password;
@@ -19,9 +24,9 @@ public class DbConfiguration {
             username = properties.getProperty("user");
             password = properties.getProperty("password");
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } catch (IOException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
     }
 

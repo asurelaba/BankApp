@@ -2,12 +2,16 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.ICountryDAO;
 import com.solvd.db.model.Country;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDAO implements ICountryDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(CountryDAO.class);
 
     private Country resultSetToCountry(ResultSet resultSet) {
         Country country = new Country();
@@ -15,7 +19,7 @@ public class CountryDAO implements ICountryDAO {
             country.setCountryId(resultSet.getInt("country_id"));
             country.setCountryName(resultSet.getString("country_name"));
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return country;
     }
@@ -34,7 +38,7 @@ public class CountryDAO implements ICountryDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -53,7 +57,7 @@ public class CountryDAO implements ICountryDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -71,7 +75,7 @@ public class CountryDAO implements ICountryDAO {
             preparedStatement.setInt(2, country.getCountryId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -87,7 +91,7 @@ public class CountryDAO implements ICountryDAO {
             preparedStatement.setInt(1, country.getCountryId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from countries failed" + e);
+            LOGGER.error("delete from countries failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -106,7 +110,7 @@ public class CountryDAO implements ICountryDAO {
                 countries.add(resultSetToCountry(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -125,7 +129,7 @@ public class CountryDAO implements ICountryDAO {
                 return resultSetToCountry(resultSet);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

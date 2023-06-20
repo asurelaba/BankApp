@@ -1,5 +1,7 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +11,16 @@ import java.util.List;
 public class Customer {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("customerId")
     private int customerId;
 
     @XmlElement(name = "person")
+    @JsonProperty("person")
     private Person person;
 
     @XmlElementWrapper(name = "accounts")
     @XmlElement(name = "account", type = Account.class)
+    @JsonProperty("accounts")
     private List<Account> accounts = new ArrayList<>();
 
     public int getCustomerId() {
@@ -45,9 +50,9 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId=" + customerId +
-                ", person=" + person +
-                ", accounts=" + accounts +
+                "customerId=" + customerId + "\n" +
+                ", person=" + person + "\n" +
+                ", accounts=" + accounts + "\n" +
                 '}';
     }
 }

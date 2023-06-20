@@ -3,6 +3,8 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO implements IAccountDAO {
+
+    public static final Logger LOGGER = LogManager.getLogger(AccountDAO.class);
 
     @Override
     public List<Account> getAccountByTypeId(int accountTypeId) {
@@ -36,7 +40,7 @@ public class AccountDAO implements IAccountDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            System.out.println("problem executing getAccountByTypeId" + e);
+            LOGGER.error("problem executing getAccountByTypeId" + e);
         }
         return accounts;
     }
@@ -57,7 +61,7 @@ public class AccountDAO implements IAccountDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("could not insert account" + account + "into table:: " + e);
+            LOGGER.error("could not insert account" + account + "into table:: " + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -81,7 +85,7 @@ public class AccountDAO implements IAccountDAO {
                 return account;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -101,7 +105,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setInt(2, account.getAccountNumber());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -120,7 +124,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setInt(1, account.getAccountNumber());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -147,7 +151,7 @@ public class AccountDAO implements IAccountDAO {
             }
             return accounts;
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

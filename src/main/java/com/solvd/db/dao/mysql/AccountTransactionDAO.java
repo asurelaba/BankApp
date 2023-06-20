@@ -4,12 +4,16 @@ import com.solvd.db.dao.interfaces.IAccountTransactionDAO;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountTransaction;
 import com.solvd.db.model.TransactionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountTransactionDAO implements IAccountTransactionDAO {
+
+    public static final Logger LOGGER = LogManager.getLogger(AccountTransactionDAO.class);
 
     private AccountTransaction resultSetToAccountTransaction(ResultSet resultSet) {
         AccountTransaction accountTransaction = new AccountTransaction();
@@ -25,7 +29,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             accountTransaction.setAmount(resultSet.getInt("amount"));
             return accountTransaction;
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }
@@ -47,7 +51,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return accountTransactions;
     }
@@ -71,7 +75,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("could not insert account" + accountTransaction + "into table:: " + e);
+            LOGGER.error("could not insert account" + accountTransaction + "into table:: " + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -90,7 +94,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -111,7 +115,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             preparedStatement.setInt(5, accountTransaction.getTransactionId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -126,7 +130,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
             preparedStatement.setInt(1, accountTransaction.getTransactionId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -148,7 +152,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
                 CONNECTION_POOL.releaseConnection(connection);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return accountTransactions;
     }

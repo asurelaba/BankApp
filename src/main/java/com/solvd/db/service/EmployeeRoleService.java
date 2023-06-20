@@ -4,12 +4,15 @@ import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.IEmployeeRoleDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.EmployeeRole;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRoleService {
 
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeRoleService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<EmployeeRole> getAllEmployeeRoles() {
@@ -20,7 +23,7 @@ public class EmployeeRoleService {
                 employeeRoles.add(employeeRole);
             }
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return employeeRoles;
     }

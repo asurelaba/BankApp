@@ -3,12 +3,16 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.ICustomerDAO;
 import com.solvd.db.model.Customer;
 import com.solvd.db.model.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements ICustomerDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(Customer.class);
 
     private Customer resultSetToCustomer(ResultSet resultSet) {
         Customer customer = new Customer();
@@ -18,7 +22,7 @@ public class CustomerDAO implements ICustomerDAO {
             person.setPersonId(resultSet.getInt("person_id"));
             customer.setPerson(person);
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return customer;
     }
@@ -37,7 +41,7 @@ public class CustomerDAO implements ICustomerDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -56,7 +60,7 @@ public class CustomerDAO implements ICustomerDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -74,7 +78,7 @@ public class CustomerDAO implements ICustomerDAO {
             preparedStatement.setInt(2, customer.getCustomerId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -90,7 +94,7 @@ public class CustomerDAO implements ICustomerDAO {
             preparedStatement.setInt(1, customer.getCustomerId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from customers failed" + e);
+            LOGGER.error("delete from customers failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -109,7 +113,7 @@ public class CustomerDAO implements ICustomerDAO {
                 customers.add(resultSetToCustomer(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

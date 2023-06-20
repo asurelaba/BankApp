@@ -5,12 +5,15 @@ import com.solvd.db.dao.interfaces.ICustomerDAO;
 import com.solvd.db.dao.interfaces.ICustomersHasAccountsDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
 
+    private static final Logger LOGGER = LogManager.getLogger(CustomerService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<Customer> getAllCustomers() {
@@ -21,7 +24,7 @@ public class CustomerService {
                 customers.add(customer);
             }
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return customers;
     }
@@ -33,7 +36,7 @@ public class CustomerService {
             ICustomerDAO customerDAO = (ICustomerDAO) jdbcDAOFactory.getDAO(Customer.class.getSimpleName());
             customerDAO.insert(customer);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
     }
 
@@ -46,7 +49,7 @@ public class CustomerService {
             List<Account> accounts = customersHasAccountsDAO.getAccountsByCustomerID(customerId);
             customer.setAccounts(accounts);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return customer;
     }

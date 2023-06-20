@@ -3,12 +3,16 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddressDAO implements IAddressDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(AddressDAO.class);
 
     private Address resultSetToAddress(ResultSet resultSet) {
         Address address = new Address();
@@ -20,9 +24,8 @@ public class AddressDAO implements IAddressDAO {
             City city = new City();
             city.setCityId(resultSet.getInt(5));
             address.setCity(city);
-            System.out.println(address);
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return address;
     }
@@ -41,7 +44,7 @@ public class AddressDAO implements IAddressDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -65,7 +68,7 @@ public class AddressDAO implements IAddressDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -84,7 +87,7 @@ public class AddressDAO implements IAddressDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -105,7 +108,7 @@ public class AddressDAO implements IAddressDAO {
             preparedStatement.setInt(5, address.getAddressId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -121,7 +124,7 @@ public class AddressDAO implements IAddressDAO {
             preparedStatement.setInt(1, address.getAddressId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from addresses failed" + e);
+            LOGGER.error("delete from addresses failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -140,7 +143,7 @@ public class AddressDAO implements IAddressDAO {
                 addresses.add(resultSetToAddress(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

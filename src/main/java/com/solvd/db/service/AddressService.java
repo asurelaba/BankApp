@@ -5,12 +5,15 @@ import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddressService {
 
+    private static final Logger LOGGER = LogManager.getLogger(AddressService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public List<Address> getAllAddressesByCity(City city) {
@@ -24,7 +27,7 @@ public class AddressService {
                 }
             }
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return result;
     }
@@ -34,7 +37,7 @@ public class AddressService {
             IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
             return addressDAO.getById(addressId);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }
@@ -48,7 +51,7 @@ public class AddressService {
             address.setCity(city);
             addressDAO.insert(address);
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
     }
 }

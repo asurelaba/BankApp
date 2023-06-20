@@ -1,0 +1,173 @@
+{
+  "customers": [
+    {
+      "customerId": 1,
+      "person": {
+        "personId": 2,
+        "firstName": "ada",
+        "lastName": "adalast",
+        "dateOfBirth": "09-09-1999",
+        "phoneNumber": "1231231234",
+        "email": "adalast@abcd.com",
+        "address": {
+          "addressId": 3,
+          "line1": "111 ada street",
+          "line2": "apt 9",
+          "zipCode": "12345",
+          "city": {
+            "cityId": 3,
+            "cityName": "pittsburgh",
+            "country": {
+              "countryId": 1,
+              "countryName": "usa"
+            }
+          }
+        }
+      },
+      "accounts": [
+        {
+          "accountNumber": 23456789,
+          "balance": 123456.0,
+          "minBalance": 500.0,
+          "accountType": {
+            "accountTypeId": 2,
+            "accountType": "checking"
+          }
+        },
+        {
+          "accountNumber": 99999999,
+          "balance": 3000.0,
+          "minBalance": 100.0,
+          "accountType": {
+            "accountTypeId": 1,
+            "accountType": "saving"
+          }
+        }
+      ]
+    },
+    {
+      "customerId": 2,
+      "person": {
+        "personId": 4,
+        "firstName": "ccc",
+        "lastName": "ccccc",
+        "dateOfBirth": "18-09-1999",
+        "phoneNumber": "1231231234",
+        "email": "cccc@abcd.com",
+        "address": {
+          "addressId": 7,
+          "line1": "111 cccc street",
+          "line2": "apt 20",
+          "zipCode": "66666",
+          "city": {
+            "cityId": 3,
+            "cityName": "san fransisco",
+            "country": {
+              "countryId": 1,
+              "countryName": "usa"
+            }
+          }
+        }
+      },
+      "accounts": [
+        {
+          "accountNumber": 23456789,
+          "balance": 123456.0,
+          "minBalance": 500.0,
+          "accountType": {
+            "accountTypeId": 2,
+            "accountType": "checking"
+          }
+        }
+      ]
+    }
+  ],
+  "employees": [
+    {
+      "employeeId": 1,
+      "person": {
+        "personId": 2,
+        "firstName": "ada",
+        "lastName": "adalast",
+        "dateOfBirth": "09-09-1999",
+        "phoneNumber": "1231231234",
+        "email": "adalast@abcd.com",
+        "address": {
+          "addressId": 3,
+          "line1": "111 ada street",
+          "line2": "apt 9",
+          "zipCode": "12345",
+          "city": {
+            "cityId": 3,
+            "cityName": "pittsburgh",
+            "country": {
+              "countryId": 1,
+              "countryName": "usa"
+            }
+          }
+        }
+      },
+      "employeeRole": {
+        "roleName": "branch manager",
+        "salary": 80000
+      }
+    },
+    {
+      "employeeId": 2,
+      "person": {
+        "personId": 3,
+        "firstName": "bbb",
+        "lastName": "bbbblast",
+        "dateOfBirth": "09-30-1999",
+        "phoneNumber": "1231231234",
+        "email": "bbb@abcd.com",
+        "address": {
+          "addressId": 3,
+          "line1": "111 bbb street",
+          "line2": "apt 11",
+          "zipCode": "12345",
+          "city": {
+            "cityId": 3,
+            "cityName": "pittsburgh",
+            "country": {
+              "countryId": 1,
+              "countryName": "usa"
+            }
+          }
+        }
+      },
+      "employeeRole": {
+        "roleName": "teller",
+        "salary": 33000
+      },
+      "manager": {
+        "employeeId": 1,
+        "person": {
+          "personId": 2,
+          "firstName": "ada",
+          "lastName": "adalast",
+          "dateOfBirth": "09-09-1999",
+          "phoneNumber": "1231231234",
+          "email": "adalast@abcd.com",
+          "address": {
+            "addressId": 3,
+            "line1": "111 ada street",
+            "line2": "apt 9",
+            "zipCode": "12345",
+            "city": {
+              "cityId": 3,
+              "cityName": "pittsburgh",
+              "country": {
+                "countryId": 1,
+                "countryName": "usa"
+              }
+            }
+          }
+        },
+        "employeeRole": {
+          "roleName": "branch manager"
+        }
+      }
+    }
+  ]
+}

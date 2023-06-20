@@ -6,9 +6,12 @@ import com.solvd.db.dao.interfaces.IAccountTypeDAO;
 import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.AccountType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AccountTypeService {
 
+    private static final Logger LOGGER = LogManager.getLogger(AccountTypeService.class);
     private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
 
     public AccountType getAccountTypeForAccount(Account account) {
@@ -19,7 +22,7 @@ public class AccountTypeService {
             account.setAccountType(accountType);
             return accountType;
         } catch (DAONotFoundException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }

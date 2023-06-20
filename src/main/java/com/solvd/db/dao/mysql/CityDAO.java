@@ -3,12 +3,16 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.ICityDAO;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Country;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CityDAO implements ICityDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(CityDAO.class);
 
     private City resultSetToCity(ResultSet resultSet) {
         City city = null;
@@ -20,7 +24,7 @@ public class CityDAO implements ICityDAO {
             country.setCountryId(resultSet.getInt("country_id"));
             city.setCountry(country);
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return city;
     }
@@ -40,7 +44,7 @@ public class CityDAO implements ICityDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -59,7 +63,7 @@ public class CityDAO implements ICityDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -79,7 +83,7 @@ public class CityDAO implements ICityDAO {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -95,7 +99,7 @@ public class CityDAO implements ICityDAO {
             preparedStatement.setInt(1, city.getCityId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from cities failed" + e);
+            LOGGER.error("delete from cities failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -114,7 +118,7 @@ public class CityDAO implements ICityDAO {
                 cities.add(resultSetToCity(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -134,7 +138,7 @@ public class CityDAO implements ICityDAO {
                 cities.add(resultSetToCity(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

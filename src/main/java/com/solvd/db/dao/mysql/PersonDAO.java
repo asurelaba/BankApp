@@ -3,12 +3,16 @@ package com.solvd.db.dao.mysql;
 import com.solvd.db.dao.interfaces.IPersonDAO;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDAO implements IPersonDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(PersonDAO.class);
 
     private Person resultSetToPerson(ResultSet resultSet) {
         Person person = new Person();
@@ -22,9 +26,8 @@ public class PersonDAO implements IPersonDAO {
             Address address = new Address();
             address.setAddressId(resultSet.getInt("address_id"));
             person.setAddress(address);
-            System.out.println(person);
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return person;
     }
@@ -45,12 +48,11 @@ public class PersonDAO implements IPersonDAO {
             preparedStatement.execute();
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 if (resultSet.next()) {
-                    System.out.println("person id" + resultSet.getInt(1));
                     person.setPersonId(resultSet.getInt(1));
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -66,12 +68,11 @@ public class PersonDAO implements IPersonDAO {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    System.out.println("resultset" + resultSet.getString(2));
                     return resultSetToPerson(resultSet);
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -94,7 +95,7 @@ public class PersonDAO implements IPersonDAO {
             preparedStatement.setInt(7, person.getPersonId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -110,7 +111,7 @@ public class PersonDAO implements IPersonDAO {
             preparedStatement.setInt(1, person.getPersonId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from persons failed" + e);
+            LOGGER.error("delete from persons failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -129,7 +130,7 @@ public class PersonDAO implements IPersonDAO {
                 personList.add(resultSetToPerson(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -149,7 +150,7 @@ public class PersonDAO implements IPersonDAO {
                 personList.add(resultSetToPerson(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

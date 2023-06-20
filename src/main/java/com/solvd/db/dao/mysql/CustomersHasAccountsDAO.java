@@ -4,6 +4,8 @@ import com.solvd.db.dao.interfaces.ICustomersHasAccountsDAO;
 import com.solvd.db.model.Account;
 import com.solvd.db.model.Customer;
 import com.solvd.db.model.CustomerHasAccount;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(CustomersHasAccountsDAO.class);
 
     @Override
     public void insert(CustomerHasAccount customerHasAccount) {
@@ -24,7 +28,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
             preparedStatement.setInt(2, customerHasAccount.getAccount_number());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -40,7 +44,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
             preparedStatement.setInt(2, customerHasAccount.getAccount_number());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -56,7 +60,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
             preparedStatement.setInt(2, customerHasAccount.getCustomer_id());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -78,7 +82,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -101,7 +105,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -124,7 +128,7 @@ public class CustomersHasAccountsDAO implements ICustomersHasAccountsDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

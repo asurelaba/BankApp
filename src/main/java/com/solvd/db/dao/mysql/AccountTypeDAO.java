@@ -2,6 +2,8 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.IAccountTypeDAO;
 import com.solvd.db.model.AccountType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,13 +11,15 @@ import java.util.List;
 
 public class AccountTypeDAO implements IAccountTypeDAO {
 
+    public static final Logger LOGGER = LogManager.getLogger(AccountTypeDAO.class);
+
     private AccountType resultSetToAccountType(ResultSet resultSet) {
         AccountType accountType = new AccountType();
         try {
             accountType.setAccountTypeId(resultSet.getInt(1));
             accountType.setAccountType(resultSet.getString(2));
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return null;
     }
@@ -33,7 +37,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -54,7 +58,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -73,7 +77,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -92,7 +96,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -108,7 +112,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
             preparedStatement.setInt(1, accountType.getAccountTypeId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete on accounttype failed" + e);
+            LOGGER.error("delete on accounttype failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -127,7 +131,7 @@ public class AccountTypeDAO implements IAccountTypeDAO {
                 accountTypes.add(resultSetToAccountType(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

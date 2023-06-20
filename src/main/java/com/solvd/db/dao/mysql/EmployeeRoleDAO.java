@@ -2,6 +2,8 @@ package com.solvd.db.dao.mysql;
 
 import com.solvd.db.dao.interfaces.IEmployeeRoleDAO;
 import com.solvd.db.model.EmployeeRole;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRoleDAO implements IEmployeeRoleDAO {
+    
+    private static final Logger LOGGER = LogManager.getLogger(EmployeeRoleDAO.class);
 
     private EmployeeRole resultSetToEmployeeRole(ResultSet resultSet) {
         EmployeeRole employeeRole = new EmployeeRole();
@@ -20,7 +24,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
             employeeRole.setJobDescription(resultSet.getString("job_description"));
             employeeRole.setSalary(resultSet.getInt(resultSet.getInt("salary")));
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         }
         return employeeRole;
     }
@@ -41,7 +45,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -60,7 +64,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -80,7 +84,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
             preparedStatement.setInt(4, employeeRole.getRoleId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("Update failed" + e);
+            LOGGER.error("Update failed" + e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -96,7 +100,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
             preparedStatement.setInt(1, employeeRole.getRoleId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("delete from employee_roles failed" + e);
+            LOGGER.error("delete from employee_roles failed" + e);
         } finally {
             if (connection != null) {
                 CONNECTION_POOL.releaseConnection(connection);
@@ -115,7 +119,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
                 employeeRoles.add(resultSetToEmployeeRole(resultSet));
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }
@@ -135,7 +139,7 @@ public class EmployeeRoleDAO implements IEmployeeRoleDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            LOGGER.error(e);
         } finally {
             CONNECTION_POOL.releaseConnection(connection);
         }

@@ -1,5 +1,8 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -7,9 +10,11 @@ import javax.xml.bind.annotation.*;
 public class Country {
 
     @XmlAttribute(name = "id")
+    @JsonProperty("countryId")
     private int countryId;
 
     @XmlElement(name = "countryName")
+    @JsonProperty("countryName")
     private String countryName;
 
     public int getCountryId() {
