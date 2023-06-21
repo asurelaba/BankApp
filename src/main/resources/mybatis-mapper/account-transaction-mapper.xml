@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IAccountTransactionDAO">
+
+    <resultMap id="AccountTransactionResultMap" type="AccountTransaction" autoMapping="false">
+        <id property="transactionId" column="transaction_id"/>
+        <result property="amount" column="amount"/>
+        <result property="transactionDate" column="transaction_date"/>
+        <association property="account" column="account_number"
+                     select="com.solvd.db.dao.interfaces.IAccountDAO.getById" javaType="Account"/>
+        <association property="transactionType" column="transaction_type_id" javaType="TransactionType"
+                     select="com.solvd.db.dao.interfaces.ITransactionTypeDAO.getById"/>
+    </resultMap>
+
+    <insert id="insert" keyColumn="transactionId" useGeneratedKeys="true" parameterType="AccountTransaction"
+            keyProperty="transaction_id">
+        INSERT INTO account_transactions(amount, transaction_date, account_number, transaction_type_id)
+        VALUES (#{amount},#{transactionDate},#{account.accountNumber},#{transactionType.TransactionTypeId})
+    </insert>
+
+    <update id="update" parameterType="AccountTransaction">
+        UPDATE account_transactions
+        SET amount = #{amount}, transaction_date = #{}, account_number =#{}, transaction_type_id = #{}
+        WHERE transaction_id = #{}
+    </update>
+
+    <delete id="delete" parameterType="AccountTransaction">
+        DELETE FROM account_transactions
+        WHERE transaction_id = #{}
+    </delete>
+
+
+    <select id="getById" resultMap="AccountTransactionResultMap" parameterType="int">
+        SELECT * FROM account_transactions WHERE transaction_id = #{transactionId}
+    </select>
+
+    <select id="getAll" resultMap="AccountTransactionResultMap">
+        SELECT * FROM account_transactions
+    </select>
+
+    <select id="getTransactionByAccountNumber" resultMap="AccountTransactionResultMap" parameterType="int">
+        SELECT * FROM account_transactions
+        WHERE account_number = #{accountNumber}
+    </select>
+
+</mapper>

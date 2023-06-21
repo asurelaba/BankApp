@@ -33,5 +33,14 @@
         <mappers>
                 <mapper resource="mybatis-mapper/account-mapper.xml"/>
                 <mapper resource="mybatis-mapper/account-type-mapper.xml"/>
+                <mapper resource="mybatis-mapper/account-transaction-mapper.xml"/>
+                <mapper resource="mybatis-mapper/address-mapper.xml"/>
+                <mapper resource="mybatis-mapper/city-mapper.xml"/>
+                <mapper resource="mybatis-mapper/country-mapper.xml"/>
+                <mapper resource="mybatis-mapper/customer-mapper.xml"/>
+                <mapper resource="mybatis-mapper/emploee-mapper.xml"/>
+                <mapper resource="mybatis-mapper/employee-role-mapper.xml"/>
+                <mapper resource="mybatis-mapper/person-mapper.xml"/>
+                <mapper resource="mybatis-mapper/transaction-type-mapper.xml"/>
         </mappers>
 </configuration>

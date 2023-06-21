@@ -1,6 +1,6 @@
 import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.dao.interfaces.IAccountTypeDAO;
-import com.solvd.db.dao.interfaces.IBaseDAO;
+
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.model.*;
@@ -110,22 +110,19 @@ public class Main {
         File bankInputFile = new File("src/main/resources/inputjson/bank.json");
         LOGGER.info(new JsonParserUtil<Bank>().deserialize(bankInputFile, Bank.class));
 
-        try(Reader reader = Resources.getResourceAsReader("mybatis-config.xml")){
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-            SqlSession sqlSession = sqlSessionFactory.openSession();
-            IAccountDAO accountDAO = sqlSession.getMapper(IAccountDAO.class);
-            System.out.println(accountDAO.getById(20230003));
-            Account account2 = new Account();
-            IAccountTypeDAO accountTypeDAO = sqlSession.getMapper(IAccountTypeDAO.class);
-            account2.setAccountType(accountTypeDAO.getById(1));
-            account2.setBalance(10000000);
-            account2.setMinBalance(90);
-            accountDAO.insert(account2);
-            sqlSession.commit();
-            System.out.println(account2.getAccountNumber());
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+        LOGGER.info("--------------Using Mybatis DAO-------------");
+        AccountService accountService = new AccountService();
+        LOGGER.info(accountService.getAccountByAccountNumber(20230003));
 
+        Account account2 = new Account();
+        System.out.println(account2);
+        AccountType aa = new AccountType();
+        aa.setAccountTypeId(1);
+        aa.setAccountType("saving");
+        account2.setAccountType(aa);
+        account2.setBalance(10000000);
+        account2.setMinBalance(90);
+        accountService.createAccount(account2);
+        System.out.println(account2);
     }
 }

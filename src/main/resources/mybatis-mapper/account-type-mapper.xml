@@ -4,11 +4,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.db.dao.interfaces.IAccountTypeDAO">
-    <resultMap id="AccountTypeResultMap" type="AccountType">
+
+    <resultMap id="AccountTypeResultMap" type="AccountType" autoMapping="false">
         <id property="accountTypeId" column="account_type_id"/>
         <result property="accountType" column="account_type"/>
     </resultMap>
+
     <select id="getById" parameterType="int" resultMap="AccountTypeResultMap">
         SELECT * FROM account_types WHERE account_type_id = #{id}
     </select>
+
+    <select id="getByName" resultMap="AccountTypeResultMap">
+        SELECT * FROM account_types WHERE  account_type = #{type}
+    </select>
+
+    <select id="getAll" resultMap="AccountTypeResultMap">
+        SELECT * FROM account_types
+    </select>
+
+    <insert id="insert" parameterType="AccountType" keyColumn="accountTypeId" useGeneratedKeys="true" keyProperty="account_type_id">
+        INSERT INTO account_types(account_type) VALUES (#{typeName})
+    </insert>
+
+    <update id="update" parameterType="AccountType" keyColumn="accountTypeId">
+        UPDATE account_types
+        SET account_type = #{typeName}
+        WHERE account_type_id = #{accountTypeId}
+    </update>
+
+    <delete id="delete" parameterType="AccountType">
+        DELETE FROM account_types
+        WHERE account_type_id = #{accountTypeId}
+    </delete>
+
 </mapper>

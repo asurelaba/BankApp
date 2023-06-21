@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.ICityDAO">
+
+    <resultMap id="CityResultMap" type="City" autoMapping="false">
+        <id property="cityId" column="city_id"/>
+        <result property="cityName" column="city_name"/>
+        <association property="country" column="country_id" javaType="Country"
+                     select="com.solvd.db.dao.interfaces.ICountryDAO.getById"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="City" keyColumn="cityId" keyProperty="city_id" useGeneratedKeys="true">
+        INSERT INTO cities(city_name, country_id)
+        VALUES (#{cityName}, #{country.countryId})
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="CityResultMap">
+        SELECT * FROM cities
+        WHERE city_id = #{cityId}
+    </select>
+
+    <select id="getAll" resultMap="CityResultMap">
+        SELECT * FROM cities
+    </select>
+
+    <select id="getCityByName" resultMap="CityResultMap" parameterType="String">
+        SELECT * FROM cities
+        WHERE city_name = #{cityName}
+    </select>
+
+    <update id="update" parameterType="City">
+        UPDATE cities
+        SET city_name = #{cityName}, country_id = #{country.countryId}
+        WHERE city_id = #{cityId}
+    </update>
+
+    <delete id="delete" parameterType="City">
+        DELETE FROM cities
+        WHERE city_id = #{cityId}
+    </delete>
+</mapper>

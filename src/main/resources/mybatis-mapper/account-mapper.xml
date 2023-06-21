@@ -17,7 +17,26 @@
         SELECT * FROM accounts WHERE account_number = #{id}
     </select>
 
-    <insert id="insert" keyProperty="accountNumber" useGeneratedKeys="true" parameterType="Account">
+    <select id="getAccountByTypeId" resultMap="AccountResultMap">
+        SELECT * FROM accounts WHERE account_type_id = #{typeId}
+    </select>
+
+    <select id="getAll" resultMap="AccountResultMap">
+        SELECT * FROM accounts
+    </select>
+
+    <insert id="insert" keyProperty="accountNumber" useGeneratedKeys="true" parameterType="Account" keyColumn="account_number">
         INSERT INTO accounts(balance, minbalance, account_type_id) VALUES (#{balance},#{minBalance},#{accountType.accountTypeId})
     </insert>
+
+    <update id="update" keyProperty="accountNumber">
+        UPDATE accounts
+        SET accounts.balance = #{balance}
+        WHERE account_number = #{accountNumber}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM accounts
+        WHERE account_number = #{accountNumber}
+    </delete>
 </mapper>
