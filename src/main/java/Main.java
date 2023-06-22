@@ -132,6 +132,5 @@ public class Main {
         Customer customer2 = customerService1.getCustomerWithAccounts(4);
         LOGGER.info("customer2 :: "+ customer2);
         LOGGER.info(customerService1.getAllCustomers());
-        //new CustomerService().deleteCustomer();
     }
 }
