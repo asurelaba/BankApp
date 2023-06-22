@@ -3,6 +3,7 @@ import com.solvd.db.dao.interfaces.IAccountTypeDAO;
 
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
+import com.solvd.db.factory.DAOFactoryManager;
 import com.solvd.db.model.*;
 import com.solvd.db.service.*;
 import com.solvd.utilities.jackson.JsonParserUtil;
@@ -132,5 +133,7 @@ public class Main {
         Customer customer2 = customerService1.getCustomerWithAccounts(4);
         LOGGER.info("customer2 :: "+ customer2);
         LOGGER.info(customerService1.getAllCustomers());
+
+        DAOFactoryManager.getDAOFactoryInstance(Account.class);
     }
 }
