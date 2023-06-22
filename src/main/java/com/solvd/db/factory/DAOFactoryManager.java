@@ -52,18 +52,18 @@ public class DAOFactoryManager {
         return new JdbcDAOFactory();
     }
 
-    public static AbstractDAOFactory getDAOFactoryInstance(Class model){
-        //return config based on model class from model-daofactory config
+    //return config based on model class from model-daofactory config
+    public static AbstractDAOFactory getDAOFactoryInstance(Class model) {
         try {
             Reader reader = new FileReader(mybatisConfig);
             Properties properties = new Properties();
             properties.load(reader);
             List<String> mybatisList = List.of(properties.getProperty("mybatis").split(","));
             LOGGER.debug("factory from config file: " + mybatisList + " " + model.getSimpleName());
-            if(mybatisList.contains(model.getSimpleName().toLowerCase())){
+            if (mybatisList.contains(model.getSimpleName().toLowerCase())) {
                 LOGGER.debug("valid can return mybatis dao factory");
                 return new MyBatisDAOFactory();
-            } else{
+            } else {
                 return new JdbcDAOFactory();
             }
         } catch (IOException e) {

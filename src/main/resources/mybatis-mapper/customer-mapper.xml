@@ -24,6 +24,7 @@
         SELECT ca.account_number as account_number, c.customer_id AS customer_id, c.person_id AS person_id
         FROM customers c
         INNER JOIN customers_has_accounts ca ON c.customer_id = ca.customer_id
+        JOIN accounts a ON a.account_number = ca.account_number
         WHERE c.customer_id = #{customerId}
     </select>
 
@@ -40,15 +41,17 @@
 
     <select id="getAll" resultMap="CustomerResultMap" >
         SELECT *
-        FROM customers
-        JOIN customers_has_accounts ON customers.customer_id = customers_has_accounts.customer_id
+        FROM customers c
+        JOIN customers_has_accounts ca ON c.customer_id = ca.customer_id
+        JOIN accounts a ON a.account_number = ca.account_number
     </select>
 
     <select id="getCustomerByPhone" parameterType="String" resultMap="CustomerResultMap">
-        SELECT  ca.account_number AS account_number, c.customer_id AS customer_id, c.person_id AS person_id
+        SELECT  *
         FROM customers c
         JOIN persons p ON c.person_id = p.person_id
         JOIN customers_has_accounts ca ON c.customer_id = ca.customer_id
+        JOIN accounts a ON a.account_number = ca.account_number
         WHERE p.phone_number = #{phoneNumber}
     </select>
 </mapper>
