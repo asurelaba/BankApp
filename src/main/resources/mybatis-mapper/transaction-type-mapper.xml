@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.ITransactionTypeDAO">
+
+    <resultMap id="TransactionTypeResultMap" type="TransactionType" autoMapping="false">
+        <id property="transactionTypeId" column="transaction_type_id"/>
+        <result property="transactionType" column="transaction_type"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="TransactionType" useGeneratedKeys="true"
+            keyProperty="transactionTypeId" keyColumn="transaction_type_id">
+        INSERT INTO transaction_types (transaction_type)
+        VALUES (#{transactionType})
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="TransactionTypeResultMap">
+        SELECT * FROM transaction_types
+        WHERE transaction_type_id = #{transactionTypeId}
+    </select>
+
+    <update id="update" parameterType="TransactionType">
+        UPDATE transaction_types
+        SET transaction_type = #{transactionType}
+        WHERE transaction_type_id = #{transactionTypeId}
+    </update>
+
+    <delete id="delete" parameterType="TransactionType">
+        DELETE FROM transaction_types
+        WHERE transaction_type_id = #{transactionTypeId}
+    </delete>
+
+    <select id="getAll" resultMap="TransactionTypeResultMap">
+        SELECT * FROM transaction_types
+    </select>
+
+    <select id="getTransactionTypeByName" parameterType="String" resultMap="TransactionTypeResultMap">
+        SELECT * FROM transaction_types
+        WHERE transaction_type = #{transactionType}
+    </select>
+</mapper>

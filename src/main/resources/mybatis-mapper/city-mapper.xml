@@ -13,7 +13,7 @@
                      select="com.solvd.db.dao.interfaces.ICountryDAO.getById"/>
     </resultMap>
 
-    <insert id="insert" parameterType="City" keyColumn="cityId" keyProperty="city_id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="City" keyColumn="city_id" keyProperty="cityId" useGeneratedKeys="true">
         INSERT INTO cities(city_name, country_id)
         VALUES (#{cityName}, #{country.countryId})
     </insert>

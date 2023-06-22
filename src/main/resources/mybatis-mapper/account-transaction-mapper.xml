@@ -19,18 +19,18 @@
     <insert id="insert" keyColumn="transactionId" useGeneratedKeys="true" parameterType="AccountTransaction"
             keyProperty="transaction_id">
         INSERT INTO account_transactions(amount, transaction_date, account_number, transaction_type_id)
-        VALUES (#{amount},#{transactionDate},#{account.accountNumber},#{transactionType.TransactionTypeId})
+        VALUES (#{amount},#{transactionDate},#{account.accountNumber},#{transactionType.transactionTypeId})
     </insert>
 
     <update id="update" parameterType="AccountTransaction">
         UPDATE account_transactions
-        SET amount = #{amount}, transaction_date = #{}, account_number =#{}, transaction_type_id = #{}
-        WHERE transaction_id = #{}
+        SET amount = #{amount}, transaction_date = #{transactionDate}, account_number =#{account.accountNumber}, transaction_type_id = #{transactionType.transactionTypeId}
+        WHERE transaction_id = #{transactionId}
     </update>
 
     <delete id="delete" parameterType="AccountTransaction">
         DELETE FROM account_transactions
-        WHERE transaction_id = #{}
+        WHERE transaction_id = #{transactionId}
     </delete>
 
 

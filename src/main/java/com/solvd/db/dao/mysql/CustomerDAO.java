@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements ICustomerDAO {
-    
+
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
 
     private Customer resultSetToCustomer(ResultSet resultSet) {
@@ -36,7 +36,7 @@ public class CustomerDAO implements ICustomerDAO {
             preparedStatement.setInt(1, customer.getPerson().getPersonId());
             preparedStatement.execute();
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if(resultSet.next()){
+                if (resultSet.next()) {
                     customer.setCustomerId(resultSet.getInt(1));
                 }
             }
@@ -118,5 +118,26 @@ public class CustomerDAO implements ICustomerDAO {
             CONNECTION_POOL.releaseConnection(connection);
         }
         return customers;
+    }
+
+    @Override
+    public Customer getCustomerByPhone(String phoneNumber) {
+        String query = "SELECT * FROM " + TABLE_NAME + " JOIN persons ON customers.person_id = persons.person_id" +
+                " WHERE phone_number = ?";
+        Connection connection = CONNECTION_POOL.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, phoneNumber);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSetToCustomer(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e);
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+        return null;
     }
 }

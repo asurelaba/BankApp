@@ -14,7 +14,7 @@
         SELECT * FROM account_types WHERE account_type_id = #{id}
     </select>
 
-    <select id="getByName" resultMap="AccountTypeResultMap">
+    <select id="getByName" resultMap="AccountTypeResultMap" parameterType="String">
         SELECT * FROM account_types WHERE  account_type = #{type}
     </select>
 

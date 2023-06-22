@@ -1,9 +1,9 @@
 package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
-import com.solvd.db.dao.interfaces.IAddressDAO;
 import com.solvd.db.dao.interfaces.IPersonDAO;
-import com.solvd.db.factory.JdbcDAOFactory;
+import com.solvd.db.factory.AbstractDAOFactory;
+import com.solvd.db.factory.DAOFactoryManager;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 import com.solvd.db.model.Person;
@@ -13,13 +13,13 @@ import org.apache.logging.log4j.Logger;
 public class PersonService {
 
     private static final Logger LOGGER = LogManager.getLogger(PersonService.class);
-    private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
+    private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
 
     public Person getPersonWithAddress(int personId) {
         Person person = null;
         try {
             LOGGER.info("looking for " + Person.class.getSimpleName());
-            IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
+            IPersonDAO personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
 
             person = personDAO.getById(personId);
             AddressService addressService = new AddressService();
@@ -37,7 +37,7 @@ public class PersonService {
     public void createPerson(Person person) {
         try {
             new AddressService().createAddress(person.getAddress());
-            IPersonDAO personDAO = (IPersonDAO) jdbcDAOFactory.getDAO(Person.class.getSimpleName());
+            IPersonDAO personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
             personDAO.insert(person);
         } catch (DAONotFoundException e) {
             LOGGER.error(e);

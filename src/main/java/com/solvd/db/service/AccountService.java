@@ -4,7 +4,6 @@ import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.factory.AbstractDAOFactory;
 import com.solvd.db.factory.DAOFactoryManager;
-import com.solvd.db.factory.JdbcDAOFactory;
 import com.solvd.db.model.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

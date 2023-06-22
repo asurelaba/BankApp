@@ -123,6 +123,15 @@ public class Main {
         account2.setBalance(10000000);
         account2.setMinBalance(90);
         accountService.createAccount(account2);
-        System.out.println(account2);
+        LOGGER.info(account2);
+
+        LOGGER.info(new AccountTransactionService().getAccountTransactionsByAccountNumber(20230001));
+
+        CustomerService customerService1 = new CustomerService();
+        LOGGER.info(customerService1.getCustomerByPhone("1111111111"));
+        Customer customer2 = customerService1.getCustomerWithAccounts(4);
+        LOGGER.info("customer2 :: "+ customer2);
+        LOGGER.info(customerService1.getAllCustomers());
+        //new CustomerService().deleteCustomer();
     }
 }

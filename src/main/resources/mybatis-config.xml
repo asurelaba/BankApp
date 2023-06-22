@@ -38,7 +38,7 @@
                 <mapper resource="mybatis-mapper/city-mapper.xml"/>
                 <mapper resource="mybatis-mapper/country-mapper.xml"/>
                 <mapper resource="mybatis-mapper/customer-mapper.xml"/>
-                <mapper resource="mybatis-mapper/emploee-mapper.xml"/>
+                <mapper resource="mybatis-mapper/employee-mapper.xml"/>
                 <mapper resource="mybatis-mapper/employee-role-mapper.xml"/>
                 <mapper resource="mybatis-mapper/person-mapper.xml"/>
                 <mapper resource="mybatis-mapper/transaction-type-mapper.xml"/>

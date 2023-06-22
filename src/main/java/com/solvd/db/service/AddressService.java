@@ -2,7 +2,8 @@ package com.solvd.db.service;
 
 import com.solvd.db.customexception.DAONotFoundException;
 import com.solvd.db.dao.interfaces.IAddressDAO;
-import com.solvd.db.factory.JdbcDAOFactory;
+import com.solvd.db.factory.AbstractDAOFactory;
+import com.solvd.db.factory.DAOFactoryManager;
 import com.solvd.db.model.Address;
 import com.solvd.db.model.City;
 import org.apache.logging.log4j.LogManager;
@@ -14,12 +15,12 @@ import java.util.List;
 public class AddressService {
 
     private static final Logger LOGGER = LogManager.getLogger(AddressService.class);
-    private JdbcDAOFactory jdbcDAOFactory = new JdbcDAOFactory();
+    private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
 
     public List<Address> getAllAddressesByCity(City city) {
         List<Address> result = new ArrayList<>();
         try {
-            IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
+            IAddressDAO addressDAO = (IAddressDAO) daoFactory.getDAO(Address.class.getSimpleName());
             List<Address> addresses = addressDAO.getAll();
             for (Address address : addresses) {
                 if (address.getCity().getCityId() == city.getCityId()) {
@@ -34,7 +35,7 @@ public class AddressService {
 
     public Address getAddressById(int addressId) {
         try {
-            IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
+            IAddressDAO addressDAO = (IAddressDAO) daoFactory.getDAO(Address.class.getSimpleName());
             return addressDAO.getById(addressId);
         } catch (DAONotFoundException e) {
             LOGGER.error(e);
@@ -47,7 +48,7 @@ public class AddressService {
             CityService cityService = new CityService();
             cityService.createCity(address.getCity());
             City city = new CityService().getCityByIdWithCountry(2);
-            IAddressDAO addressDAO = (IAddressDAO) jdbcDAOFactory.getDAO(Address.class.getSimpleName());
+            IAddressDAO addressDAO = (IAddressDAO) daoFactory.getDAO(Address.class.getSimpleName());
             address.setCity(city);
             addressDAO.insert(address);
         } catch (DAONotFoundException e) {
