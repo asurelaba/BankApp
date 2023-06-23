@@ -14,7 +14,7 @@ public class PersonService {
 
     private static final Logger LOGGER = LogManager.getLogger(PersonService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
-    private  IPersonDAO personDAO;
+    private IPersonDAO personDAO;
 
     public PersonService() throws DAONotFoundException {
         personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
