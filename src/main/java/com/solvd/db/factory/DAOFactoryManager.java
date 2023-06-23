@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class DAOFactoryManager {
 
-    private static File mybatisConfig = new File("src/main/resources/DAOFactory-config.properties");
+    private static File mybatisConfig = new File("src/main/resources/daofactory-config.properties");
     private static final Logger LOGGER = LogManager.getLogger(DAOFactoryManager.class);
     private static String factory;
 

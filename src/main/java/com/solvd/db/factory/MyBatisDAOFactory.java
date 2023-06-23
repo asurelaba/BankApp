@@ -18,7 +18,6 @@ public class MyBatisDAOFactory extends AbstractDAOFactory {
     private static SqlSessionFactory sqlSessionFactory;
 
     public static SqlSessionFactory getSqlSessionFactory() {
-        System.out.println("getSqlSessionFactory" + sqlSessionFactory);
         if (sqlSessionFactory == null) {
             try (Reader reader = Resources.getResourceAsReader("mybatis-config.xml")) {
                 sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
