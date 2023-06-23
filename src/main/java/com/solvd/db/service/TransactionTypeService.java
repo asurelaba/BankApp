@@ -12,13 +12,13 @@ public class TransactionTypeService {
 
     private static final Logger LOGGER = LogManager.getLogger(TransactionTypeService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private ITransactionTypeDAO transactionTypeDAO;
+
+    public TransactionTypeService() throws DAONotFoundException {
+        transactionTypeDAO = (ITransactionTypeDAO) daoFactory.getDAO(TransactionType.class.getSimpleName());
+    }
 
     public void deleteTransactionType(String type) {
-        try {
-            ITransactionTypeDAO transactionTypeDAO = (ITransactionTypeDAO) daoFactory.getDAO(TransactionType.class.getSimpleName());
-            transactionTypeDAO.getTransactionTypeByName(type);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
+        transactionTypeDAO.getTransactionTypeByName(type);
     }
 }

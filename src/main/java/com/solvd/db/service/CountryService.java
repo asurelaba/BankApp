@@ -14,33 +14,21 @@ public class CountryService {
 
     private static final Logger LOGGER = LogManager.getLogger(CountryService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private ICountryDAO countryDAO;
+
+    public CountryService() throws DAONotFoundException {
+        countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
+    }
 
     public List<Country> getAllCountries() {
-        try {
-            ICountryDAO countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
-            return countryDAO.getAll();
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
-        return null;
+        return countryDAO.getAll();
     }
 
     public void createCountry(Country country) {
-        try {
-            ICountryDAO countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
-            countryDAO.insert(country);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
+        countryDAO.insert(country);
     }
 
     public Country getCountryByName(String countryName) {
-        try {
-            ICountryDAO countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
-            return countryDAO.getCountryByName(countryName);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
-        return null;
+        return countryDAO.getCountryByName(countryName);
     }
 }

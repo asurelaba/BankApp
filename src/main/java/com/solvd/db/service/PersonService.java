@@ -14,13 +14,16 @@ public class PersonService {
 
     private static final Logger LOGGER = LogManager.getLogger(PersonService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private  IPersonDAO personDAO;
+
+    public PersonService() throws DAONotFoundException {
+        personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
+    }
 
     public Person getPersonWithAddress(int personId) {
         Person person = null;
         try {
             LOGGER.info("looking for " + Person.class.getSimpleName());
-            IPersonDAO personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
-
             person = personDAO.getById(personId);
             AddressService addressService = new AddressService();
             Address address = addressService.getAddressById(person.getAddress().getAddressId());
@@ -37,7 +40,6 @@ public class PersonService {
     public void createPerson(Person person) {
         try {
             new AddressService().createAddress(person.getAddress());
-            IPersonDAO personDAO = (IPersonDAO) daoFactory.getDAO(Person.class.getSimpleName());
             personDAO.insert(person);
         } catch (DAONotFoundException e) {
             LOGGER.error(e);

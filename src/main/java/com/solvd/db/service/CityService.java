@@ -16,22 +16,21 @@ public class CityService {
 
     private static final Logger LOGGER = LogManager.getLogger(CityService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private ICityDAO cityDAO;
+
+    public CityService() throws DAONotFoundException {
+        cityDAO = (ICityDAO) daoFactory.getDAO(City.class.getSimpleName());
+    }
 
     public List<City> getAllCities() {
-        try {
-            ICityDAO cityDAO = (ICityDAO) daoFactory.getDAO(City.class.getSimpleName());
-            return cityDAO.getAll();
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
-        return null;
+        return cityDAO.getAll();
     }
 
     public City getCityByIdWithCountry(int id) {
+        City city = cityDAO.getById(id);
+        ICountryDAO countryDAO = null;
         try {
-            ICityDAO cityDAO = (ICityDAO) daoFactory.getDAO(City.class.getSimpleName());
-            City city = cityDAO.getById(id);
-            ICountryDAO countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
+            countryDAO = (ICountryDAO) daoFactory.getDAO(Country.class.getSimpleName());
             city.setCountry(countryDAO.getById(city.getCountry().getCountryId()));
             return city;
         } catch (DAONotFoundException e) {
@@ -40,19 +39,14 @@ public class CityService {
         return null;
     }
 
-    public void createCity(City city) {
-        try {
-            ICityDAO cityDAO = (ICityDAO) daoFactory.getDAO(City.class.getSimpleName());
-            CountryService countryService = new CountryService();
-            Country country = countryService.getCountryByName(city.getCountry().getCountryName());
-            if (country == null) {
-                countryService.createCountry(city.getCountry());
-                country = countryService.getCountryByName(city.getCountry().getCountryName());
-            }
-            city.setCountry(country);
-            cityDAO.insert(city);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
+    public void createCity(City city) throws DAONotFoundException {
+        CountryService countryService = new CountryService();
+        Country country = countryService.getCountryByName(city.getCountry().getCountryName());
+        if (country == null) {
+            countryService.createCountry(city.getCountry());
+            country = countryService.getCountryByName(city.getCountry().getCountryName());
         }
+        city.setCountry(country);
+        cityDAO.insert(city);
     }
 }

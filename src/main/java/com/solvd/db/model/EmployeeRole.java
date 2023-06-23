@@ -1,10 +1,7 @@
 package com.solvd.db.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement

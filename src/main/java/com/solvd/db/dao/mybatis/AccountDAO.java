@@ -3,8 +3,6 @@ package com.solvd.db.dao.mybatis;
 import com.solvd.db.dao.interfaces.IAccountDAO;
 import com.solvd.db.model.Account;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 

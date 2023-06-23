@@ -12,33 +12,21 @@ public class AccountService {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private IAccountDAO accountDAO;
+
+    public AccountService() throws DAONotFoundException {
+        accountDAO = (IAccountDAO) daoFactory.getDAO(Account.class.getSimpleName());
+    }
 
     public Account getAccountByAccountNumber(int accountNumber) {
-        Account account = new Account();
-        try {
-            IAccountDAO accountDAO = (IAccountDAO) daoFactory.getDAO(Account.class.getSimpleName());
-            account = accountDAO.getById(accountNumber);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
-        return account;
+        return accountDAO.getById(accountNumber);
     }
 
     public void createAccount(Account account) {
-        try {
-            IAccountDAO accountDAO = (IAccountDAO) daoFactory.getDAO(Account.class.getSimpleName());
-            accountDAO.insert(account);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
+        accountDAO.insert(account);
     }
 
     public void deleteAccount(Account account) {
-        try {
-            IAccountDAO accountDAO = (IAccountDAO) daoFactory.getDAO(Account.class.getSimpleName());
-            accountDAO.delete(account);
-        } catch (DAONotFoundException e) {
-            LOGGER.error(e);
-        }
+        accountDAO.delete(account);
     }
 }

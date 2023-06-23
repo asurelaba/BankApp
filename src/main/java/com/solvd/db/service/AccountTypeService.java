@@ -14,10 +14,14 @@ public class AccountTypeService {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountTypeService.class);
     private AbstractDAOFactory daoFactory = DAOFactoryManager.getDAOFactoryInstance();
+    private IAccountTypeDAO accountTypeDAO;
+
+    public AccountTypeService() throws DAONotFoundException {
+        accountTypeDAO = (IAccountTypeDAO) daoFactory.getDAO(AccountType.class.getSimpleName());
+    }
 
     public AccountType getAccountTypeForAccount(Account account) {
         try {
-            IAccountTypeDAO accountTypeDAO = (IAccountTypeDAO) daoFactory.getDAO(AccountType.class.getSimpleName());
             IAccountDAO accountDAO = (IAccountDAO) daoFactory.getDAO(Account.class.getName());
             AccountType accountType = accountTypeDAO.getById(account.getAccountType().getAccountTypeId());
             account.setAccountType(accountType);
