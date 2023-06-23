@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IPersonDAO">
+
+    <resultMap id="PersonResultMap" type="Person" autoMapping="false">
+        <id property="personId" column="person_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="dateOfBirth" column="date_of_birth"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="email" column="email"/>
+        <association property="address" column="address_id" javaType="Address"
+                     select="com.solvd.db.dao.interfaces.IAddressDAO.getById"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Person"
+            keyProperty="personId" keyColumn="person_id" useGeneratedKeys="true">
+        INSERT INTO persons(first_name, last_name, date_of_birth, phone_number, email, address_id)
+        VALUES (#{firstName}, #{lastName}, #{dateOfBirth}, #{phoneNumber}, #{email}, #{address.addressId})
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="PersonResultMap">
+        SELECT * FROM persons
+        WHERE person_id = #{personId}
+    </select>
+
+    <update id="update" parameterType="Person">
+        UPDATE persons
+        SET first_name = #{firstName}, last_name= #{lastName}, date_of_birth = #{dateOfBirth}, phone_number= #{phoneNumber}, email = #{email}, address_id = #{address.addressId}
+        WHERE person_id = #{personId}
+    </update>
+
+    <delete id="delete" parameterType="Person">
+        DELETE FROM persons
+        WHERE person_id = #{personId}
+    </delete>
+
+    <select id="getAll" resultMap="PersonResultMap">
+        SELECT * FROM persons
+    </select>
+
+    <select id="getPersonByLastName" parameterType="String" resultMap="PersonResultMap">
+        SELECT * FROM persons
+        WHERE last_name = #{lastName}
+    </select>
+</mapper>

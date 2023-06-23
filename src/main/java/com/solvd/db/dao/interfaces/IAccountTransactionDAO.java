@@ -8,5 +8,5 @@ public interface IAccountTransactionDAO extends IBaseDAO<AccountTransaction> {
 
     String TABLE_NAME = "account_transactions";
 
-    public List<AccountTransaction> getTransactionByAccountNumber(int accountNumber);
+    List<AccountTransaction> getTransactionByAccountNumber(int accountNumber);
 }

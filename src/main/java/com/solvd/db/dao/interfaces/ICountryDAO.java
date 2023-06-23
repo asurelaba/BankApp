@@ -6,5 +6,5 @@ public interface ICountryDAO extends IBaseDAO<Country> {
 
     String TABLE_NAME = "countries";
 
-    public Country getCountryByName(String countryName);
+    Country getCountryByName(String countryName);
 }

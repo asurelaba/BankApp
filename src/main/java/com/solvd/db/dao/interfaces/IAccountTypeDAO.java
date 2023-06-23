@@ -6,5 +6,5 @@ public interface IAccountTypeDAO extends IBaseDAO<AccountType> {
 
     String TABLE_NAME = "account_types";
 
-    public AccountType getByName(String accountType);
+    AccountType getByName(String accountType);
 }

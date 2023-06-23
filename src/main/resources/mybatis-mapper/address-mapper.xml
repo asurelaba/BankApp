@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IAddressDAO">
+
+    <resultMap id="AddressResultMap" type="Address" autoMapping="false">
+        <id property="addressId" column="address_id"/>
+        <result property="line1" column="line1"/>
+        <result property="line2" column="line2"/>
+        <result property="zipCode" column="zip_code"/>
+        <association property="city" column="city_id" javaType="City"
+                     select="com.solvd.db.dao.interfaces.ICityDAO.getById"/>
+    </resultMap>
+
+    <select id="getAddressByZipCode" resultMap="AddressResultMap" parameterType="String">
+        SELECT * FROM addresses
+        WHERE zip_code = #{zipCode}
+    </select>
+
+    <select id="getById" parameterType="int" resultMap="AddressResultMap">
+        SELECT * FROM addresses
+        WHERE address_id = #{addressId}
+    </select>
+
+    <select id="getAll" resultMap="AddressResultMap">
+        SELECT * FROM addresses
+    </select>
+
+    <insert id="insert" parameterType="Address" useGeneratedKeys="true"
+            keyProperty="addressId" keyColumn="address_id">
+        INSERT INTO addresses(line1, line2, zip_code, city_id)
+        VALUES (#{line1}, #{line2}, #{zipCode}, #{city.cityId})
+    </insert>
+
+    <update id="update" parameterType="Address">
+        UPDATE addresses
+        SET line1 = #{line1}, line2 = #{line2}, zip_code = #{zipCode}, city_id = #{city.cityId}
+        WHERE address_id = #{addressId}
+    </update>
+
+    <delete id="delete" parameterType="Address">
+        DELETE FROM addresses
+        WHERE address_id = #{addressId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IEmployeeDAO">
+
+    <resultMap id="EmployeeResultMap" type="Employee" autoMapping="false">
+        <id property="employeeId" column="employee_id"/>
+        <association property="person" column="person_id" javaType="Person"
+                     select="com.solvd.db.dao.interfaces.IPersonDAO.getById"/>
+        <association property="employeeRole" column="employee_role_id" javaType="EmployeeRole"
+                     select="com.solvd.db.dao.interfaces.IEmployeeRoleDAO.getById"/>
+        <association property="manager" column="manager_id" javaType="Employee"
+                     select="com.solvd.db.dao.interfaces.IEmployeeDAO.getById"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Employee" useGeneratedKeys="true"
+            keyColumn="employee_id" keyProperty="employeeId">
+        INSERT INTO employees(person_id, employee_role_id, manager_id)
+        VALUES (#{person.personId}, #{employeeRole.roleId}, #{manager.employeeId})
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="EmployeeResultMap">
+        SELECT * FROM employees
+        WHERE employee_id = #{employeeId}
+    </select>
+
+    <update id="update" parameterType="Employee">
+        UPDATE employees
+        SET person_id = #{person.personId},  employee_role_id = #{employeeRole.roleId}, manager_id = #{manager.employeeId}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <delete id="delete" parameterType="Employee">
+        DELETE FROM employees
+        WHERE employee_id = #{employeeId}
+    </delete>
+
+    <select id="getAll" resultMap="EmployeeResultMap">
+        SELECT * FROM employees
+    </select>
+
+    <select id="getEmployeesByRoleID" parameterType="int" resultMap="EmployeeResultMap">
+        SELECT * FROM employees
+        employee_role_id = #{roleId}
+    </select>
+</mapper>

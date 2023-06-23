@@ -1,6 +1,5 @@
 package com.solvd.utilities;
 
-import com.solvd.db.service.AddressService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
