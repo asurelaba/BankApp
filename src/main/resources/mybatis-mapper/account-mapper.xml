@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IAccountDAO">
+    <resultMap id="AccountResultMap" type="Account" autoMapping="false">
+        <id property="accountNumber" column="account_number"/>
+        <result property="balance" column="balance"/>
+        <result property="minBalance" column="minbalance"/>
+        <association property="accountType" column="account_type_id" javaType="AccountType"
+                     select="com.solvd.db.dao.interfaces.IAccountTypeDAO.getById"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="AccountResultMap">
+        SELECT * FROM accounts WHERE account_number = #{id}
+    </select>
+
+    <select id="getAccountByTypeId" resultMap="AccountResultMap">
+        SELECT * FROM accounts WHERE account_type_id = #{typeId}
+    </select>
+
+    <select id="getAll" resultMap="AccountResultMap">
+        SELECT * FROM accounts
+    </select>
+
+    <insert id="insert" keyProperty="accountNumber" useGeneratedKeys="true" parameterType="Account" keyColumn="account_number">
+        INSERT INTO accounts(balance, minbalance, account_type_id) VALUES (#{balance},#{minBalance},#{accountType.accountTypeId})
+    </insert>
+
+    <update id="update" keyProperty="accountNumber">
+        UPDATE accounts
+        SET accounts.balance = #{balance}
+        WHERE account_number = #{accountNumber}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM accounts
+        WHERE account_number = #{accountNumber}
+    </delete>
+</mapper>

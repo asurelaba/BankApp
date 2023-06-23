@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.db.dao.interfaces.IEmployeeRoleDAO">
+
+    <resultMap id="EmployeeRoleResultMap" type="EmployeeRole" autoMapping="false">
+        <id property="roleId" column="employee_role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="jobDescription" column="job_description"/>
+        <result property="salary" column="salary"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="EmployeeRole" useGeneratedKeys="true"
+            keyProperty="roleId" keyColumn="employee_role_id">
+        INSERT INTO employee_roles (role_name, job_description, salary)
+        VALUES (#{roleName}, #{jobDescription}, #{salary})
+    </insert>
+
+    <select id="getById" parameterType="int" resultMap="EmployeeRoleResultMap">
+        SELECT * FROM employee_roles
+        WHERE employee_role_id = #{roleId}
+    </select>
+
+    <update id="update" parameterType="EmployeeRole">
+        UPDATE employee_roles
+        SET role_name = #{roleName}, job_description = #{jobDescription}, salary = #{salary}
+        WHERE employee_role_id = #{roleId}
+    </update>
+
+    <delete id="delete" parameterType="EmployeeRole">
+        DELETE FROM employee_roles
+        WHERE employee_role_id = #{roleId}
+    </delete>
+
+    <select id="getAll" resultMap="EmployeeRoleResultMap">
+        SELECT * FROM employee_roles
+    </select>
+
+    <select id="getRoleByName" parameterType="String" resultMap="EmployeeRoleResultMap">
+        SELECT * FROM employee_roles
+        WHERE role_name IS #{roleName}
+    </select>
+</mapper>

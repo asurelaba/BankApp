@@ -6,10 +6,7 @@ import com.solvd.db.model.AccountType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class AccountDAO implements IAccountDAO {
         String query = "INSERT INTO " + TABLE_NAME + " (balance,minbalance,account_type_id)  VALUES (?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setDouble(1, account.getBalance());
             preparedStatement.setDouble(2, account.getMinBalance());
             preparedStatement.setInt(3, account.getAccountType().getAccountTypeId());

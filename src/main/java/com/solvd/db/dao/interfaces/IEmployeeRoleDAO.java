@@ -6,5 +6,5 @@ public interface IEmployeeRoleDAO extends IBaseDAO<EmployeeRole> {
 
     String TABLE_NAME = "employee_roles";
 
-    public EmployeeRole getRoleByName(String roleName);
+    EmployeeRole getRoleByName(String roleName);
 }

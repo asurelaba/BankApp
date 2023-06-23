@@ -8,5 +8,5 @@ public interface ICityDAO extends IBaseDAO<City> {
 
     String TABLE_NAME = "cities";
 
-    public List<City> getCityByName(String cityName);
+    List<City> getCityByName(String cityName);
 }

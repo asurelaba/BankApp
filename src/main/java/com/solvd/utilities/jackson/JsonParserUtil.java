@@ -1,7 +1,6 @@
 package com.solvd.utilities.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solvd.db.service.AddressService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

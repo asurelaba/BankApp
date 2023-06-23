@@ -1,5 +1,8 @@
+import com.solvd.db.customexception.DAONotFoundException;
+
 import com.solvd.db.dao.mysql.AccountDAO;
 import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
+import com.solvd.db.factory.DAOFactoryManager;
 import com.solvd.db.model.*;
 import com.solvd.db.service.*;
 import com.solvd.utilities.jackson.JsonParserUtil;
@@ -34,8 +37,13 @@ public class Main {
         LOGGER.info(new AccountDAO().getAccountByTypeId(2));
 
         //Using services, person service inturn uses address, city, country DAO
-        Person person = new PersonService().getPersonWithAddress(4);
-        LOGGER.info(person);
+        Person person = null;
+        try {
+            person = new PersonService().getPersonWithAddress(4);
+            LOGGER.info(person);
+        } catch (DAONotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         Customer customer = new Customer();
         Person person1 = new Person();
@@ -57,8 +65,12 @@ public class Main {
         address.setCity(city);
         person1.setAddress(address);
         customer.setPerson(person1);
-        CustomerService customerService = new CustomerService();
-        customerService.createCustomer(customer);
+        CustomerService customerService = null;
+        try {
+            new CustomerService().createCustomer(customer);
+        } catch (DAONotFoundException e) {
+            LOGGER.error("Customer service is not working");
+        }
 
         //calling unsupported operations
         LOGGER.info(new CustomersHasAccountsDAO().getById(1));
@@ -78,27 +90,81 @@ public class Main {
         File outputFile = new File("target/customer.xml");
         parseXMLJaxB.marshall(customer1, outputFile);
 
-        List<Employee> employees = new EmployeeService().getAllEmployeesWithManager();
-        Bank bank = new Bank();
-        bank.setEmployees(employees);
-        XmlJAXBParser<Bank> parseXMLJaxBEmployee = new XmlJAXBParser();
-        File employeesOutputFile = new File("target/employee.xml");
-        parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
+        List<Employee> employees = null;
+        try {
+            employees = new EmployeeService().getAllEmployeesWithManager();
+            Bank bank = new Bank();
+            bank.setEmployees(employees);
+            XmlJAXBParser<Bank> parseXMLJaxBEmployee = new XmlJAXBParser();
+            File employeesOutputFile = new File("target/employee.xml");
+            parseXMLJaxBEmployee.marshall(bank, employeesOutputFile);
+        } catch (DAONotFoundException e) {
+            LOGGER.error("Employee Service operations cannot be performed. Corresponding DAOs not found.");
+        }
 
         //serialize and deserialize json with Jackson
-        Account account1 = new AccountService().getAccountByAccountNumber(20230001);
-        JsonParserUtil<Account> parseJson = new JsonParserUtil<>();
-        File ouputJsonFile = new File("target/account.json");
-        parseJson.serialize(account1, ouputJsonFile);
+        Account account1 = null;
+        try {
+            account1 = new AccountService().getAccountByAccountNumber(20230001);
+            JsonParserUtil<Account> parseJson = new JsonParserUtil<>();
+            File ouputJsonFile = new File("target/account.json");
+            parseJson.serialize(account1, ouputJsonFile);
+        } catch (DAONotFoundException e) {
+            LOGGER.error("Account DAO not found. Aborting all operations with Account Service");
+        }
 
         File outputJsonCustomer = new File("target/customer.json");
         new JsonParserUtil<Customer>().serialize(customer1, outputJsonCustomer);
 
-        List<AccountTransaction> accountTransactions = new AccountTransactionService().getAccountTransactionsByAccountNumber(20230001);
-        File outputJsonTransactions = new File("target/transaction.json");
-        new JsonParserUtil<AccountTransaction>().serialize(accountTransactions, outputJsonTransactions);
+        List<AccountTransaction> accountTransactions = null;
+        try {
+            accountTransactions = new AccountTransactionService().getAccountTransactionsByAccountNumber(20230001);
+            File outputJsonTransactions = new File("target/transaction.json");
+            new JsonParserUtil<AccountTransaction>().serialize(accountTransactions, outputJsonTransactions);
+        } catch (DAONotFoundException e) {
+            LOGGER.error("Operations with AccountTransactionService cannot be perormed.");
+        }
 
         File bankInputFile = new File("src/main/resources/inputjson/bank.json");
         LOGGER.info(new JsonParserUtil<Bank>().deserialize(bankInputFile, Bank.class));
+
+        LOGGER.info("--------------Using Mybatis DAO-------------");
+        AccountService accountService = null;
+        try {
+            accountService = new AccountService();
+            LOGGER.info(accountService.getAccountByAccountNumber(20230003));
+        } catch (DAONotFoundException e) {
+            LOGGER.error("account service operations cannot be performed");
+        }
+
+        Account account2 = new Account();
+        LOGGER.info(account2);
+        AccountType aa = new AccountType();
+        aa.setAccountTypeId(1);
+        aa.setAccountType("saving");
+        account2.setAccountType(aa);
+        account2.setBalance(10000000);
+        account2.setMinBalance(90);
+        accountService.createAccount(account2);
+        LOGGER.info(account2);
+
+        try {
+            LOGGER.info(new AccountTransactionService().getAccountTransactionsByAccountNumber(20230001));
+        } catch (DAONotFoundException e) {
+            LOGGER.error("opeations with AccountTransactionService cannot be performed");
+        }
+
+        CustomerService customerService1 = null;
+        try {
+            customerService1 = new CustomerService();
+            LOGGER.info(customerService1.getCustomerByPhone("1111111111"));
+            Customer customer2 = customerService1.getCustomerWithAccounts(4);
+            LOGGER.info("customer2 :: " + customer2);
+            LOGGER.info(customerService1.getAllCustomers());
+        } catch (DAONotFoundException e) {
+            LOGGER.error("Customer Service operations cannot be performed");
+        }
+
+        DAOFactoryManager.getDAOFactoryInstance(Account.class);
     }
 }

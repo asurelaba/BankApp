@@ -59,7 +59,7 @@ public class AccountTransactionDAO implements IAccountTransactionDAO {
     @Override
     public void insert(AccountTransaction accountTransaction) {
         String query = "INSERT INTO " + TABLE_NAME + " (amount, transaction_date, account_number, transaction_type_id)" +
-                "VALUES (?,?,?,?,?)";
+                "VALUES (?,?,?,?)";
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
