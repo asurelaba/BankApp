@@ -32,7 +32,7 @@ public class Bank {
     public Bank() {
     }
 
-    public Bank(BankBuilder bankBuilder) {
+    private Bank(BankBuilder bankBuilder) {
         this.accounts = bankBuilder.accounts;
         this.employees = bankBuilder.employees;
         this.customers = bankBuilder.customers;
