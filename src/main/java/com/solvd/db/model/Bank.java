@@ -1,5 +1,6 @@
 package com.solvd.db.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.xml.bind.annotation.*;
@@ -24,6 +25,8 @@ public class Bank {
     @JsonProperty("accounts")
     List<Account> accounts;
 
+    @XmlTransient
+    @JsonIgnore
     private Double interestSavingsAccount;
 
     public Bank() {
