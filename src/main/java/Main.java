@@ -5,6 +5,8 @@ import com.solvd.db.dao.mysql.CustomersHasAccountsDAO;
 import com.solvd.db.factory.DAOFactoryManager;
 import com.solvd.db.model.*;
 import com.solvd.db.service.*;
+import com.solvd.observer.AccountObserver;
+import com.solvd.observer.monitor.InterestMonitor;
 import com.solvd.utilities.jackson.JsonParserUtil;
 import com.solvd.utilities.jaxbxml.XmlJAXBParser;
 import com.solvd.utilities.validateparsexml.ValidateXmlUtil;
@@ -14,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -166,5 +169,28 @@ public class Main {
         }
 
         DAOFactoryManager.getDAOFactoryInstance(Account.class);
+
+        //using builder to build bank object
+        try {
+            Bank bank = new Bank.BankBuilder()
+                    .withAccounts(new AccountService().getAllAccounts())
+                    .withCustomers(new CustomerService().getAllCustomers())
+                    .withEmployees(new EmployeeService().getAllEmployees()).build();
+            LOGGER.info("Bank object built :: " + bank);
+
+            //observer design pattern to update all accounts when interest on savings account is modified.
+            InterestMonitor interestMonitor = new InterestMonitor(bank);
+            new AccountObserver(interestMonitor);
+            LOGGER.info("----------------Old balance -----------------");
+            DecimalFormat format = new DecimalFormat("#.00");
+            new AccountService().getAllAccounts()
+                    .forEach((Account acc) -> LOGGER.info(format.format(acc.getBalance())));
+            interestMonitor.setState(0.2);
+            LOGGER.info("----------------New balance -----------------");
+            new AccountService().getAllAccounts()
+                    .forEach((Account acc) -> LOGGER.info(format.format(acc.getBalance())));
+        } catch (DAONotFoundException e) {
+            LOGGER.error(e);
+        }
     }
 }

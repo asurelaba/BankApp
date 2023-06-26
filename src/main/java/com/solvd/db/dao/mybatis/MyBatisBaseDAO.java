@@ -35,6 +35,7 @@ public abstract class MyBatisBaseDAO<Entity> implements IBaseDAO<Entity> {
     public void update(Entity entity) {
         try (SqlSession sqlSession = SQL_SESSION_FACTORY.openSession()) {
             sqlSession.update(interfaceName + ".update", entity);
+            sqlSession.commit();
         }
     }
 
@@ -42,6 +43,7 @@ public abstract class MyBatisBaseDAO<Entity> implements IBaseDAO<Entity> {
     public void delete(Entity entity) {
         try (SqlSession sqlSession = SQL_SESSION_FACTORY.openSession()) {
             sqlSession.update(interfaceName + ".delete", entity);
+            sqlSession.commit();
         }
     }
 

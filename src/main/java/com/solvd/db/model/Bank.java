@@ -1,6 +1,7 @@
 package com.solvd.db.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -22,6 +23,50 @@ public class Bank {
     @XmlElement(name = "account", type = Account.class)
     @JsonProperty("accounts")
     List<Account> accounts;
+
+    private Double interestSavingsAccount;
+
+    public Bank() {
+    }
+
+    public Bank(BankBuilder bankBuilder) {
+        this.accounts = bankBuilder.accounts;
+        this.employees = bankBuilder.employees;
+        this.customers = bankBuilder.customers;
+    }
+
+    public static class BankBuilder {
+        List<Customer> customers;
+        List<Employee> employees;
+        List<Account> accounts;
+
+        public BankBuilder withCustomers(List<Customer> customers) {
+            this.customers = customers;
+            return this;
+        }
+
+        public BankBuilder withEmployees(List<Employee> employees) {
+            this.employees = employees;
+            return this;
+        }
+
+        public BankBuilder withAccounts(List<Account> accounts) {
+            this.accounts = accounts;
+            return this;
+        }
+
+        public Bank build() {
+            return new Bank(this);
+        }
+    }
+
+    public Double getInterestSavingsAccount() {
+        return interestSavingsAccount;
+    }
+
+    public void setInterestSavingsAccount(Double interestSavingsAccount) {
+        this.interestSavingsAccount = interestSavingsAccount;
+    }
 
     public List<Customer> getCustomers() {
         return customers;
