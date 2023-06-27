@@ -37,4 +37,8 @@ public class EmployeeService {
         }
         return employees;
     }
+
+    public List<Employee> getAllEmployees() {
+        return employeeDAO.getAll();
+    }
 }

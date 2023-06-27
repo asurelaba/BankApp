@@ -8,6 +8,8 @@ import com.solvd.db.model.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public class AccountService {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountService.class);
@@ -28,5 +30,13 @@ public class AccountService {
 
     public void deleteAccount(Account account) {
         accountDAO.delete(account);
+    }
+
+    public List<Account> getAllAccounts() {
+        return accountDAO.getAll();
+    }
+
+    public void updateAccount(Account account) {
+        accountDAO.update(account);
     }
 }

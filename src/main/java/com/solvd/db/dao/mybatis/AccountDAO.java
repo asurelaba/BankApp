@@ -11,7 +11,7 @@ public class AccountDAO extends MyBatisBaseDAO<Account> implements IAccountDAO {
     @Override
     public List<Account> getAccountByTypeId(int accountTypeId) {
         try (SqlSession sqlSession = SQL_SESSION_FACTORY.openSession()) {
-           return sqlSession.getMapper(IAccountDAO.class).getAccountByTypeId(accountTypeId);
+            return sqlSession.getMapper(IAccountDAO.class).getAccountByTypeId(accountTypeId);
         }
     }
 }
